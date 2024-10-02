@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ad721d8f16b264886f01f998791c4e, type: 3}
+  m_Name: CFG_Game
+  m_EditorClassIdentifier: Gyvr.Mythril2D:Gyvr.Mythril2D:GameConfig
+  databaseRegistry: {fileID: 11400000, guid: a8f91d1fb50951643ae0721b3f46eaed, type: 2}
+  gameplayScene: Gameplay
+  mainMenuSceneName: Main Menu
+  interactionLayer: Interaction
+  projectileLayer: Projectile
+  hitboxLayer: Hitbox
+  layersIgnoredByProjectiles:
+  - Collision A
+  collisionContactFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 3656
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  cameraShakeSources: 1
+  onTheGoCraftingStation: {fileID: 11400000, guid: 655d6294ee66b2740b36bac6c4a2fb5e, type: 2}
+  canCriticalHit: 1
+  canMissHit: 1
+  m_gameTerms:
+    m_keys:
+    - currency
+    - experience
+    - level
+    - health
+    - mana
+    - physical_attack
+    - magical_attack
+    - physical_defense
+    - magical_defense
+    - agility
+    - luck
+    - attribute_points
+    - class
+    - consumable
+    - resource
+    - gear
+    - key
+    m_values:
+    - fullName: Gold
+      shortName: G.
+      description: Currency of the world of [INSERT_WORLD_NAME]
+      icon: {fileID: -637868742, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+    - fullName: Experience
+      shortName: Exp.
+      description: Points required to level up
+      icon: {fileID: 0}
+    - fullName: Level
+      shortName: Lvl.
+      description: Progression indicator for a character
+      icon: {fileID: 0}
+    - fullName: Health
+      shortName: Health
+      description: 
+      icon: {fileID: 1269947344, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+    - fullName: Mana
+      shortName: Mana
+      description: 
+      icon: {fileID: 2059989182, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+    - fullName: Strength
+      shortName: Strength
+      description: 
+      icon: {fileID: -491117512, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+    - fullName: Intelligence
+      shortName: Intel.
+      description: 
+      icon: {fileID: -827782456, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+    - fullName: Armor
+      shortName: Armor
+      description: 
+      icon: {fileID: -117338440, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+    - fullName: Magic Resistance
+      shortName: Mag. Res.
+      description: 
+      icon: {fileID: 567610833, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+    - fullName: Agility
+      shortName: Agility
+      description: 
+      icon: {fileID: 783625353, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+    - fullName: Luck
+      shortName: Luck
+      description: 
+      icon: {fileID: -87856419, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+    - fullName: Attribute Points
+      shortName: Attr. Pts.
+      description: Point available to the player to improve their attributes
+      icon: {fileID: 0}
+    - fullName: Class
+      shortName: Class
+      description: Archetype of the character
+      icon: {fileID: 0}
+    - fullName: Consumable
+      shortName: Cons.
+      description: Consumable items
+      icon: {fileID: -1227757721, guid: b2aa333e2a0687c499a8b4ecb8625997, type: 3}
+    - fullName: Resource
+      shortName: Res.
+      description: Collectable items
+      icon: {fileID: -683347236, guid: c94cf32db75ba2e429c4186822410ca0, type: 3}
+    - fullName: Gear
+      shortName: Gear
+      description: Pieces of equipment
+      icon: {fileID: -490976884, guid: 8ace1fb331206454aa908061100d1519, type: 3}
+    - fullName: Key
+      shortName: Key
+      description: Important items
+      icon: {fileID: -1442231693, guid: fd2aecd1af34986489ae2b6e9c2501b8, type: 3}
+  m_statTermsBinding:
+    m_keys: 0000000001000000020000000300000004000000050000000600000007000000
+    m_values:
+    - health
+    - mana
+    - physical_attack
+    - magical_attack
+    - physical_defense
+    - magical_defense
+    - agility
+    - luck
+  m_itemCategoryTermsBinding:
+    m_keys: 00000000010000000200000003000000
+    m_values:
+    - consumable
+    - resource
+    - gear
+    - key

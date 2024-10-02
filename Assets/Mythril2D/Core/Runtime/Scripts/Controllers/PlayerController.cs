@@ -14,6 +14,11 @@ namespace Gyvr.Mythril2D
         [Header("Audio")]
         [SerializeField] private AudioClipResolver m_interactionSound;
 
+        [Header("Dash")]
+        [SerializeField][Min(0)] private float m_dashStrength = 1;
+        [SerializeField][Min(0)] private float m_dashResistance = 1;
+        [SerializeField] private ParticleSystem m_dashParticleSystem = null;
+
         public GameObject interactionTarget => m_interactionTarget;
 
         private CharacterBase m_character = null;
@@ -48,6 +53,7 @@ namespace Gyvr.Mythril2D
             GameManager.InputSystem.gameplay.move.performed += OnMove;
             GameManager.InputSystem.gameplay.move.canceled += OnStoppedMoving;
             GameManager.InputSystem.gameplay.openGameMenu.performed += OnOpenGameMenu;
+            GameManager.InputSystem.gameplay.dash.performed += OnDash;
         }
 
         private void OnDestroy()
@@ -59,6 +65,7 @@ namespace Gyvr.Mythril2D
             GameManager.InputSystem.gameplay.move.performed -= OnMove;
             GameManager.InputSystem.gameplay.move.canceled -= OnStoppedMoving;
             GameManager.InputSystem.gameplay.openGameMenu.performed -= OnOpenGameMenu;
+            GameManager.InputSystem.gameplay.dash.performed -= OnDash;
         }
 
         protected AbilitySheet GetAbilityAtIndex(int index)
@@ -130,6 +137,21 @@ namespace Gyvr.Mythril2D
         {
             m_character.SetMovementDirection(Vector2.zero);
         }
+
+        private void OnDash(InputAction.CallbackContext context)
+        {
+            Vector2 direction =
+                m_character.IsMoving() ?
+                m_character.movementDirection :
+                (m_character.GetLookAtDirection() == EDirection.Right ? Vector2.right : Vector2.left);
+
+            m_character.Push(direction, m_dashStrength, m_dashResistance, faceOppositeDirection: true);
+            if (m_dashParticleSystem != null)
+            {
+                m_dashParticleSystem.Play();
+            }
+        }
+        // Line break so it looks nicer :)
 
         private void OnInteract(InputAction.CallbackContext context) => TryInteracting();
 

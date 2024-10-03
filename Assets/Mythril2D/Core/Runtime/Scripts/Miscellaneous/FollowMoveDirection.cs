@@ -29,22 +29,6 @@ namespace Gyvr.Mythril2D
             m_initialPosition = transform.localPosition;
         }
 
-                if (m_toFlip != null)
-                {
-                    foreach (SpriteRenderer spriteRenderer in m_toFlip)
-                    {
-                        spriteRenderer.flipX = myEDirection == EDirection.Left;
-                    }
-                }
-            }
-            else
-            {
-                float angle = math.atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Debug.Log("angle is " + angle);
-                transform.localRotation = Quaternion.Euler(0.0f,0.0f,myEDirection == EDirection.Left ? angle - 180.0f : angle);
-                transform.localScale = new Vector3(math.abs(transform.localScale.x) * modifier, transform.localScale.y, transform.localScale.z);
-            }
-        }
         public void OnTargetDirectionChanged(EDirection direction)
         {
             float modifier = direction == EDirection.Right ? 1.0f : -1.0f;

@@ -23,6 +23,7 @@ namespace Gyvr.Mythril2D
         {
             if (m_target != null)
             {
+
                 m_target.directionChangedEventOfMe.AddListener(OnTargetDirectionChanged);
                 m_target.directionChangedEvent.AddListener(OnTargetDirectionChanged);
             }

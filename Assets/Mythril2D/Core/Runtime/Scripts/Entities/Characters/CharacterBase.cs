@@ -72,7 +72,6 @@ namespace Gyvr.Mythril2D
         [SerializeField] private string m_isMovingAnimationParameter = "isMoving";
 
         // Public Events
-        [HideInInspector] public UnityEvent<Vector2> directionChangedEventOfMe = new UnityEvent<Vector2>();
         [HideInInspector] public UnityEvent<EDirection> directionChangedEvent = new UnityEvent<EDirection>();
         [HideInInspector] public UnityEvent<CharacterBase> provokedEvent = new UnityEvent<CharacterBase>();
 
@@ -543,8 +542,8 @@ namespace Gyvr.Mythril2D
                         TryMove(new Vector2(0, m_movementDirection.y), m_moveSpeed);
                     }
                 }
-                SetLookAtDirection(m_movementDirection);
-                //SetLookAtDirection(m_movementDirection.x);
+
+                SetLookAtDirection(m_movementDirection.x);
             }
 
             m_animator.SetBool(m_isMovingAnimationParameter, m_lastSuccessfullMoveDirection.magnitude > 0.0f);
@@ -572,16 +571,7 @@ namespace Gyvr.Mythril2D
             Vector3 direction = target.position - transform.position;
             SetLookAtDirection(direction.x);
         }
-        public void SetLookAtDirection(Vector2 direction)
-        {
-            if (direction.x != 0.0f || direction.y != 0.0f)
-            {
-                EDirection myEDirection = direction.x >= 0.0f ? EDirection.Right : EDirection.Left;
-                bool wasFlipped = m_spriteRenderer.flipX;
-                m_spriteRenderer.flipX = myEDirection == EDirection.Left;
-                directionChangedEventOfMe.Invoke(direction);
-            }
-        }
+
         public void SetLookAtDirection(float direction)
         {
             if (direction != 0.0f)

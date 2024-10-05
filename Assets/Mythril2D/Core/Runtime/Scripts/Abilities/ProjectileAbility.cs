@@ -42,6 +42,7 @@ namespace Gyvr.Mythril2D
         {
             GameObject projectileInstance = m_projectilePool.GetAvailableInstance();
             projectileInstance.transform.position = m_projectileSpawnPoint.position;
+            Quaternion offestRotation = m_projectileSpawnPoint.parent.parent.localRotation;
             projectileInstance.SetActive(true);
             Projectile projectile = projectileInstance.GetComponent<Projectile>();
             bool lookAtLeft = m_character.GetLookAtDirection() == EDirection.Left;
@@ -49,10 +50,14 @@ namespace Gyvr.Mythril2D
                 lookAtLeft ?
                 Vector3.left :
                 Vector3.right;
-
-            float angleOffset = (m_sheet.spread / m_sheet.projectileCount) * projectileIndex - (m_sheet.spread / 2.0f);
-
-            direction = Quaternion.AngleAxis(angleOffset, lookAtLeft ? Vector3.forward : Vector3.back) * direction;
+            
+            float angleOffset = (m_sheet.spread / m_sheet.projectileCount) * (projectileIndex - (int)(m_sheet.projectileCount / 2.0f));
+            angleOffset = m_sheet.projectileCount % 2 == 0 ? (projectileIndex >= (int)(m_sheet.projectileCount / 2.0f) ? angleOffset + m_sheet.spread / m_sheet.projectileCount : angleOffset):angleOffset;
+            //float angleOffset = (m_sheet.spread / m_sheet.projectileCount) * projectileIndex - (m_sheet.spread / 2.0f);
+            Debug.Log("angleOffset:" + angleOffset + ",projectileIndex:" + projectileIndex + "m_sheet" + m_sheet.name);
+            Vector3 offestSum = Quaternion.AngleAxis(angleOffset, lookAtLeft ? Vector3.forward : Vector3.back).eulerAngles + offestRotation.eulerAngles;
+            direction = Quaternion.Euler(offestSum) * direction;
+            //direction = Quaternion.AngleAxis(angleOffset, lookAtLeft ? Vector3.forward : Vector3.back) * direction;
 
             projectile.Throw(DamageSolver.SolveDamageOutput(m_character, m_sheet.damageDescriptor), direction, m_sheet.projectileSpeed);
         }

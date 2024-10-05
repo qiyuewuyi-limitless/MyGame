@@ -120,6 +120,8 @@ namespace Gyvr.Mythril2D
         private void CompleteTransition(Action onCompletion)
         {
             GameManager.NotificationSystem.mapTransitionCompleted.Invoke();
+             
+            // the "?." similar to if (onCompletion != null) onCompletion.Invoke();
             onCompletion?.Invoke();
         }
     }

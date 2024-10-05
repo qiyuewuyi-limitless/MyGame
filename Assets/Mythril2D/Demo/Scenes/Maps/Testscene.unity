@@ -5343,7 +5343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7809687660588735212, guid: 6cb5509a131c1ee4c897427858476b52, type: 3}
       propertyPath: m_destinationGameObjectName
-      value: TP_Test_Island_1
+      value: TP_Test_Island_2
       objectReference: {fileID: 0}
     - target: {fileID: 7809687660588735212, guid: 6cb5509a131c1ee4c897427858476b52, type: 3}
       propertyPath: m_destionationTeleporterName
@@ -9638,7 +9638,7 @@ Tilemap:
       - {fileID: 1394832365, guid: 86927a6d0529c694e9ca29b81246c55e, type: 3}
       - {fileID: -1199958878, guid: 86927a6d0529c694e9ca29b81246c55e, type: 3}
       - {fileID: 529578102, guid: 86927a6d0529c694e9ca29b81246c55e, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 23, y: 5, z: 0}

@@ -75,6 +75,7 @@ namespace Gyvr.Mythril2D
 
         private void UnloadMap(string map, Action onCompletion)
         {
+            // if teleported map equal to current map then can not teleport
             if (map != string.Empty && map == m_currentMap)
             {
                 Debug.Log($"Unloading Map {map}...");

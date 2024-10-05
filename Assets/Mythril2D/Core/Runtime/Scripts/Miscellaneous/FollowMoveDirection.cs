@@ -49,7 +49,7 @@ namespace Gyvr.Mythril2D
             else
             {
                 float angle = math.atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Debug.Log("angle is " + angle);
+                // Debug.Log("angle is " + angle);
                 transform.localRotation = Quaternion.Euler(0.0f,0.0f,myEDirection == EDirection.Left ? angle - 180.0f : angle);
                 transform.localScale = new Vector3(math.abs(transform.localScale.x) * modifier, transform.localScale.y, transform.localScale.z);
             }

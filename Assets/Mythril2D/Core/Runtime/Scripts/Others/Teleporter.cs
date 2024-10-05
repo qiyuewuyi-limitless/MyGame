@@ -36,9 +36,12 @@ namespace Gyvr.Mythril2D
 
                 GameManager.NotificationSystem.audioPlaybackRequested.Invoke(m_activationAudio);
 
+                Debug.Log(m_destinationMap);
+
                 GameManager.MapLoadingSystem.RequestTransition(m_destinationMap, null, () =>
                 {
                     GameObject destionationGameObject = GameObject.Find(m_destinationGameObjectName);
+
                     if (destionationGameObject)
                     {
                         GameManager.Player.transform.position = destionationGameObject.transform.position;

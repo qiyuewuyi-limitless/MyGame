@@ -29,5 +29,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Mythril2D/Demo/Scenes/Maps/King_Fred_House.unity
     guid: 330c2d75e374945c9aa7d09eda197326
+  - enabled: 1
+    path: Assets/Mythril2D/Demo/Scenes/Testscene.unity
+    guid: 740e574d0b0f55f4c87041145fe80fb0
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 58b46bb59f19fa6489d514aa4d7bec82, type: 2}

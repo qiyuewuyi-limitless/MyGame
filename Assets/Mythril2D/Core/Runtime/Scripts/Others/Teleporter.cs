@@ -36,17 +36,35 @@ namespace Gyvr.Mythril2D
 
                 GameManager.NotificationSystem.audioPlaybackRequested.Invoke(m_activationAudio);
 
-                GameManager.MapLoadingSystem.RequestTransition(m_destinationMap, null, () =>
-                {
-                    GameObject destionationGameObject = GameObject.Find(m_destinationGameObjectName);
-                    if (destionationGameObject)
-                    {
-                        GameManager.Player.transform.position = destionationGameObject.transform.position;
-                    }
+                // Debug.Log(m_destinationMap);
 
-                    _teleportationInProgress = false;
-                });
+                // same map teleport
+                if (m_destinationMap == GameManager.MapLoadingSystem.GetCurrentMapName())
+                {
+                    TeloportPlayerPosition();
+                }
+                else
+                {
+                    GameManager.MapLoadingSystem.RequestTransition(m_destinationMap, null, () =>
+                    {
+                        TeloportPlayerPosition();
+                    });
+                }
+
             }
+        }
+
+        void TeloportPlayerPosition()
+        {
+            GameObject destionationGameObject = GameObject.Find(m_destinationGameObjectName);
+
+            if (destionationGameObject)
+            {
+                GameManager.Player.transform.position = destionationGameObject.transform.position;
+            }
+
+            // end of teleport
+            _teleportationInProgress = false;
         }
     }
 }

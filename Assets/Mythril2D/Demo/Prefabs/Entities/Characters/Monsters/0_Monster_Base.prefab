@@ -629,7 +629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4928962304513780148, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_CategoryHash
-      value: 4.680744e-31
+      value: 0.009161512
       objectReference: {fileID: 0}
     - target: {fileID: 4928962304513780153, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_Sprite
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_invincibleOnHit: 0
   m_abilitiesRoot: {fileID: 6133405294004707084}
   m_additionalAbilities: []
-  m_moveSpeed: 4
+  m_moveSpeed: 3
   m_pushIntensityScale: 1
   m_pushResistanceScale: 1
   m_movementMode: 0
@@ -698,6 +698,7 @@ MonoBehaviour:
   m_moveXAnimationParameter: moveX
   m_moveYAnimationParameter: moveY
   m_isMovingAnimationParameter: isMoving
+  m_dashAnimationParameter: dash
   m_isLootedAnimationParameter: isLooted
   directionChangedEventOfMe:
     m_PersistentCalls:

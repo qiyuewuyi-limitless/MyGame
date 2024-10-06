@@ -4990,18 +4990,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4928962302919589966, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
+      propertyPath: m_SpriteLibraryAsset
+      value: 
+      objectReference: {fileID: 7108339969198208228, guid: b9ecfa9b6e9b64b45a25499d6107d6ec, type: 3}
     - target: {fileID: 4928962304513780148, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_labelHash
-      value: 1.1037539e-22
+      value: 1.0303437e-37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928962304513780148, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
+      propertyPath: m_SpriteHash
+      value: 692080556
       objectReference: {fileID: 0}
     - target: {fileID: 4928962304513780148, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_CategoryHash
-      value: 0.009161512
+      value: 1.0429618e-14
       objectReference: {fileID: 0}
     - target: {fileID: 4928962304513780152, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e2673321296a87d4ba3f08a56595c2ae, type: 2}
+    - target: {fileID: 4928962304513780153, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1553765641, guid: 10b536180259ecf40853d1d602292b69, type: 3}
     - target: {fileID: 7402011664384171461, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_target
       value: 
@@ -5087,7 +5099,7 @@ MonoBehaviour:
   m_invincibleOnHit: 1
   m_abilitiesRoot: {fileID: 961596124167247530}
   m_additionalAbilities: []
-  m_moveSpeed: 4
+  m_moveSpeed: 3
   m_pushIntensityScale: 1
   m_pushResistanceScale: 1
   m_movementMode: 0
@@ -5098,6 +5110,7 @@ MonoBehaviour:
   m_moveXAnimationParameter: moveX
   m_moveYAnimationParameter: moveY
   m_isMovingAnimationParameter: isMoving
+  m_dashAnimationParameter: dash
   m_isLootedAnimationParameter: isLooted
   directionChangedEventOfMe:
     m_PersistentCalls:

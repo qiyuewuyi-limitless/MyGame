@@ -58,12 +58,7 @@ namespace Gyvr.Mythril2D
             // if play animation fail then destory the object
             if (TryPlayDeathAnimation() == false)
             {
-                
-                //if (TryPlayDeadAnimation() == false)
-                //{
-                //    // can be interacte
-                //    SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Interaction"));
-                //}
+                OnDeath();
             }
             else
             {
@@ -92,11 +87,11 @@ namespace Gyvr.Mythril2D
 
                 OnDeath();
 
-                //animator.SetBool(m_isLootedAnimationParameter, true); private key
-                animator.SetBool("isLooted", true);
-
                 // cancel interaction
                 SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Default"));
+
+                //animator.SetBool(m_isLootedAnimationParameter, true); private key
+                animator.SetBool("isLooted", true);
 
                 m_looted = true;
 

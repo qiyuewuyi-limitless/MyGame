@@ -8,6 +8,8 @@ namespace Gyvr.Mythril2D
         [Header("Reference")]
         [SerializeField] private ParticleSystem m_particleSystem = null;
 
+        private Vector2 m_dirction = Vector2.zero;
+
         public override void Init(CharacterBase character, AbilitySheet settings)
         {
             base.Init(character, settings);
@@ -20,15 +22,21 @@ namespace Gyvr.Mythril2D
 
         protected override void Fire()
         {
-            Vector2 direction =
+            m_dirction =
                 m_character.IsMoving() ?
                 m_character.movementDirection :
                 (m_character.GetLookAtDirection() == EDirection.Right ? Vector2.right : Vector2.left);
 
-            m_character.Push(direction, m_sheet.dashStrength, m_sheet.dashResistance, faceOppositeDirection: true);
+
+            m_character.Push(m_dirction, m_sheet.dashStrength, m_sheet.dashResistance, faceOppositeDirection: true);
+
             m_particleSystem.Play();
+
+            m_character.TryPlayDashAnimation();
 
             TerminateCasting();
         }
+
+
     }
 }

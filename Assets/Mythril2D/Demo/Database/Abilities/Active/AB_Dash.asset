@@ -17,8 +17,8 @@ MonoBehaviour:
   m_description: Propel the character forward
   m_prefab: {fileID: 9099801367207554077, guid: 511b5defbf5d4514c9ccac0e4131de64, type: 3}
   m_manaCost: 0
-  m_abilityStateManagementMode: 1
-  m_canInterupt: 0
+  m_abilityStateManagementMode: 0
+  m_canInterupt: 1
   m_disabledActionsWhileCasting: -1
   m_fireAudio: {fileID: 11400000, guid: b11aefe625452f8458e0626234984f8d, type: 2}
   m_dashStrength: 18

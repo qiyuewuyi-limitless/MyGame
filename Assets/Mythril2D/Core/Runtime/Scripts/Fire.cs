@@ -16,7 +16,7 @@ public class Fire : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log(this);
+        //Debug.Log(this);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -18,6 +18,7 @@ namespace Gyvr.Mythril2D
         [SerializeField][Min(0)] private float m_dashStrength = 1;
         [SerializeField][Min(0)] private float m_dashResistance = 1;
         [SerializeField] private ParticleSystem m_dashParticleSystem = null;
+        private Vector2 m_dirction = Vector2.zero;
 
         public GameObject interactionTarget => m_interactionTarget;
 
@@ -140,18 +141,32 @@ namespace Gyvr.Mythril2D
 
         private void OnDash(InputAction.CallbackContext context)
         {
-            Vector2 direction =
-                m_character.IsMoving() ?
-                m_character.movementDirection :
-                (m_character.GetLookAtDirection() == EDirection.Right ? Vector2.right : Vector2.left);
+            if (IsPlayingDashAnimation() == false)
+            {
+                m_dirction =
+                    m_character.IsMoving() ?
+                    m_character.movementDirection :
+                    (m_character.GetLookAtDirection() == EDirection.Right ? Vector2.right : Vector2.left);
+            }
 
-            m_character.Push(direction, m_dashStrength, m_dashResistance, faceOppositeDirection: true);
+            m_character.Push(m_dirction, m_dashStrength, m_dashResistance, faceOppositeDirection: true);
             if (m_dashParticleSystem != null)
             {
                 m_dashParticleSystem.Play();
             }
+
+
+            m_character.TryPlayDashAnimation();
         }
         // Line break so it looks nicer :)
+
+        bool IsPlayingDashAnimation()
+        {
+            AnimatorStateInfo stateInfo = m_character.animator.GetCurrentAnimatorStateInfo(0);
+
+            if (stateInfo.IsName("Dash") == true) return true;
+            else return false;
+        }
 
         private void OnInteract(InputAction.CallbackContext context) => TryInteracting();
 

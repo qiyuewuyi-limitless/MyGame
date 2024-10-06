@@ -71,6 +71,7 @@ namespace Gyvr.Mythril2D
         [SerializeField] private string m_moveXAnimationParameter = "moveX";
         [SerializeField] private string m_moveYAnimationParameter = "moveY";
         [SerializeField] private string m_isMovingAnimationParameter = "isMoving";
+        [SerializeField] private string m_dashAnimationParameter = "dash";
         [SerializeField] private string m_isLootedAnimationParameter = "isLooted";
 
         // Public Events
@@ -101,6 +102,7 @@ namespace Gyvr.Mythril2D
         private bool m_hasHitAnimation = false;
         private bool m_hasInvincibleAnimation = false;
         private bool m_invincibleAnimationPlaying = false;
+        private bool m_hasDashAnimation = false;
         private Dictionary<AbilitySheet, int> m_abilities = new Dictionary<AbilitySheet, int>();
         private Dictionary<AbilitySheet, AbilityBase> m_abilitiesInstances = new Dictionary<AbilitySheet, AbilityBase>();
         private HashSet<ITriggerableAbility> m_triggerableAbilities = new HashSet<ITriggerableAbility>();
@@ -162,6 +164,7 @@ namespace Gyvr.Mythril2D
                 m_hasDeathAnimation = AnimationUtils.HasParameter(m_animator, m_deathAnimationParameter);
                 m_hasDeadAnimation = AnimationUtils.HasParameter(m_animator, m_deadAnimationParameter);
                 m_hasInvincibleAnimation = AnimationUtils.HasParameter(m_animator, m_invincibleAnimationParameter);
+                m_hasDashAnimation = AnimationUtils.HasParameter(m_animator, m_dashAnimationParameter);
             }
         }
 
@@ -349,6 +352,17 @@ namespace Gyvr.Mythril2D
             if (m_animator && m_hasInvincibleAnimation)
             {
                 m_animator.SetTrigger(m_invincibleAnimationParameter);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool TryPlayDashAnimation()
+        {
+            if (m_animator && m_hasDashAnimation)
+            {
+                m_animator.SetTrigger(m_dashAnimationParameter);
                 return true;
             }
 
@@ -683,6 +697,9 @@ namespace Gyvr.Mythril2D
                 m_pushResistance = resistance * m_pushResistanceScale;
                 m_pushDirection = direction;
 
+                //Debug.Log("direction.x " + direction.x);
+
+                // the x = 0 while dashing
                 float directionToFace = Mathf.Sign(direction.x) >= 0.0f ? -1.0f : 1.0f;
 
                 if (faceOppositeDirection)
@@ -690,7 +707,11 @@ namespace Gyvr.Mythril2D
                     directionToFace *= -1.0f;
                 }
 
+                //Debug.Log("directionToFace " + directionToFace);
+
                 SetLookAtDirection(directionToFace > 0 ? EDirection.Right : EDirection.Left);
+
+                //Debug.Log("directionToFace " + (directionToFace > 0 ? EDirection.Right : EDirection.Left));
             }
         }
         #endregion

@@ -122,9 +122,9 @@ MonoBehaviour:
       m_Hash: 350847462
       m_Sprite: {fileID: 1049171713, guid: 4113596ae75d746b4a3729da2aa23630, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: 21300000, guid: fa4db5d89a1428840976c439dfebe427, type: 3}
+      m_SpriteOverride: {fileID: 21300000, guid: 1efda565f5d533042bdf00fd081f6750, type: 3}
     m_FromMain: 1
     m_EntryOverrideCount: 2
   m_PrimaryLibraryGUID: d94e4c183d468470e97ffccae2b0884d
-  m_ModificationHash: 638638139932384235
+  m_ModificationHash: 638638336785120797
   m_Version: 1

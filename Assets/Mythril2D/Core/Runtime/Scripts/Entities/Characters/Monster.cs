@@ -9,6 +9,8 @@ namespace Gyvr.Mythril2D
         [SerializeField] private bool m_permanentDeath = false;
         [SerializeField] private string m_gameFlagID = "monster_00";
 
+        private bool m_looted = false;
+
         protected override void Awake()
         {
             base.Awake();
@@ -53,35 +55,63 @@ namespace Gyvr.Mythril2D
         {
             GameManager.NotificationSystem.audioPlaybackRequested.Invoke(characterSheet.deathAudio);
 
-            if (!TryPlayDeathAnimation())
+            // if play animation fail then destory the object
+            if (TryPlayDeathAnimation() == false)
             {
                 
-                if (TryPlayDeadAnimation() == true)
-                {
-                }
+                //if (TryPlayDeadAnimation() == false)
+                //{
+                //    // can be interacte
+                //    SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Interaction"));
+                //}
             }
             else
             {
                 Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
-                Array.ForEach(colliders, (collider) => collider.enabled = false);
+                //Array.ForEach(colliders, (collider) => collider.enabled = false);
+
+                // cancel the playing animation
+                transform.Find("Pivot").gameObject.SetActive(false);
+
+                SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Interaction"));
             }
         }
 
-        void Loot()
+        public bool Loot()
         {
-            foreach (Loot loot in m_sheet.potentialLoot)
+            if (!m_looted)
             {
-                if (GameManager.Player.level >= loot.minimumPlayerLevel && m_level >= loot.minimumMonsterLevel && loot.IsAvailable() && loot.ResolveDrop())
+                foreach (Loot loot in m_sheet.potentialLoot)
                 {
-                    GameManager.InventorySystem.AddToBag(loot.item, loot.quantity);
+                    if (GameManager.Player.level >= loot.minimumPlayerLevel && m_level >= loot.minimumMonsterLevel && loot.IsAvailable() && loot.ResolveDrop())
+                    {
+                        GameManager.InventorySystem.AddToBag(loot.item, loot.quantity);
+                    }
                 }
+                GameManager.InventorySystem.AddMoney(m_sheet.money[m_level]);
+
+                OnDeath();
+
+                //animator.SetBool(m_isLootedAnimationParameter, true); private key
+                animator.SetBool("isLooted", true);
+
+                // cancel interaction
+                SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Default"));
+
+                m_looted = true;
+
+                return true;
             }
-            GameManager.InventorySystem.AddMoney(m_sheet.money[m_level]);
+            return false;
+        }
 
-            OnDeath();
-
-            //animator.SetBool(m_isLootedAnimationParameter, true); private key
-            animator.SetBool("isLooted", true);
+        private static void SetLayerRecursively(GameObject go, int layer)
+        {
+            go.layer = layer;
+            // dont change the child layer 
+            //var t = go.transform;
+            //for (var i = 0; i < t.childCount; i++)
+            //    SetLayerRecursively(t.GetChild(i).gameObject, layer);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Gyvr.Mythril2D
         [SerializeField] private GameObject m_object_action;
         [SerializeField] private EObjectAction m_action = EObjectAction.Switch;
 
-        //Executes the custom function of the target object class that contains "IObjectAction" interface
+        // Executes the custom function of the target object class that contains "IObjectAction" interface
         public void Execute()
         {
             IObjectAction actionObject = m_object_action.GetComponent<IObjectAction>();

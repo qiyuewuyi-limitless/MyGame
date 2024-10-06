@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5816114887555468878
 RectTransform:
   m_ObjectHideFlags: 0
@@ -624,8 +624,12 @@ PrefabInstance:
       value: 1.1037539e-22
       objectReference: {fileID: 0}
     - target: {fileID: 4928962304513780148, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
+      propertyPath: m_SpriteHash
+      value: 559079218
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928962304513780148, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_CategoryHash
-      value: 0.009161512
+      value: 4.680744e-31
       objectReference: {fileID: 0}
     - target: {fileID: 4928962304513780153, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_Sprite
@@ -634,6 +638,10 @@ PrefabInstance:
     - target: {fileID: 6764595496479173309, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: moveSpeed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902438285882621709, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7402011664384171461, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_target
@@ -671,7 +679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_interaction:
-    rid: -2
+    rid: 3619733157857984532
   m_animator: {fileID: 1069940215254817590}
   m_rigidbody: {fileID: 8526076313025978402}
   m_spriteRenderer: {fileID: 1069940215254817591}
@@ -690,6 +698,7 @@ MonoBehaviour:
   m_moveXAnimationParameter: moveX
   m_moveYAnimationParameter: moveY
   m_isMovingAnimationParameter: isMoving
+  m_isLootedAnimationParameter: isLooted
   directionChangedEventOfMe:
     m_PersistentCalls:
       m_Calls: []
@@ -705,8 +714,10 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 3619733157857984532
+      type: {class: MonsterInteraction, ns: Gyvr.Mythril2D, asm: Gyvr.Mythril2D}
+      data:
+        monster: {fileID: -592417340943693092}
 --- !u!114 &5709888431689883737
 MonoBehaviour:
   m_ObjectHideFlags: 0

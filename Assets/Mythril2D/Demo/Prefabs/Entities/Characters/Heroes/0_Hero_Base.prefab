@@ -4998,6 +4998,10 @@ PrefabInstance:
       propertyPath: m_CategoryHash
       value: 0.009161512
       objectReference: {fileID: 0}
+    - target: {fileID: 4928962304513780152, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e2673321296a87d4ba3f08a56595c2ae, type: 2}
     - target: {fileID: 7402011664384171461, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_target
       value: 
@@ -5089,10 +5093,15 @@ MonoBehaviour:
   m_movementMode: 0
   m_hitAnimationParameter: hit
   m_deathAnimationParameter: death
+  m_deadAnimationParameter: dead
   m_invincibleAnimationParameter: invincible
   m_moveXAnimationParameter: moveX
   m_moveYAnimationParameter: moveY
   m_isMovingAnimationParameter: isMoving
+  m_isLootedAnimationParameter: isLooted
+  directionChangedEventOfMe:
+    m_PersistentCalls:
+      m_Calls: []
   directionChangedEvent:
     m_PersistentCalls:
       m_Calls: []

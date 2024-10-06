@@ -282,7 +282,8 @@ namespace Gyvr.Mythril2D
 
         protected override void OnDeath()
         {
-            m_destroyOnDeath = false; // Prevents the Hero GameObject from being destroyed, so it can be used in the death screen.
+            // Prevents the Hero GameObject from being destroyed, so it can be used in the death screen.
+            m_destroyOnDeath = false; 
             base.OnDeath();
             GameManager.NotificationSystem.deathScreenRequested.Invoke();
         }

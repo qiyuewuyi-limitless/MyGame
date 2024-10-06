@@ -474,12 +474,7 @@ namespace Gyvr.Mythril2D
 
             if (!TryPlayDeathAnimation())
             {
-                // animator.SetBool(m_isLootedAnimationParameter, true);
-                if (TryPlayDeadAnimation() == true)
-                {
-                    // set interaction open
-                    OnDeath();
-                }
+                 OnDeath();
             }
             else
             {
@@ -492,7 +487,7 @@ namespace Gyvr.Mythril2D
         {
             if (m_destroyOnDeath)
             {
-                // Destroy(gameObject);
+                Destroy(gameObject);
             }
         }
 

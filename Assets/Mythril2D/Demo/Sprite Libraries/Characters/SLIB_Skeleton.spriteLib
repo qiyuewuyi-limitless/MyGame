@@ -132,13 +132,13 @@ MonoBehaviour:
     m_Hash: 219670042
     m_CategoryList: []
     m_OverrideEntries:
-    - m_Name: New Label
-      m_Hash: 259326342
+    - m_Name: Frame 1
+      m_Hash: 453341063
       m_Sprite: {fileID: -1125171854, guid: 10b536180259ecf40853d1d602292b69, type: 3}
       m_FromMain: 1
       m_SpriteOverride: {fileID: -196257763, guid: ee939c325b9cdf94599fb59f5aa357f6, type: 3}
     m_FromMain: 1
     m_EntryOverrideCount: 1
   m_PrimaryLibraryGUID: 978ddb0a89d80724599222a8c1341f6b
-  m_ModificationHash: 638638214726140204
+  m_ModificationHash: 638638225545966704
   m_Version: 1

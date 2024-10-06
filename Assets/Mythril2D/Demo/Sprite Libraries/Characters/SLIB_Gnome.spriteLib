@@ -128,6 +128,17 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 291684897, guid: 915090ac8a7eead43b4da7aa0f5618ee, type: 3}
     m_FromMain: 1
     m_EntryOverrideCount: 0
+  - m_Name: Dead
+    m_Hash: 219670042
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Frame 1
+      m_Hash: 453341063
+      m_Sprite: {fileID: -1125171854, guid: 10b536180259ecf40853d1d602292b69, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 933523919, guid: 7dc5e1c866cc5486fb4b1fe18f4691b0, type: 3}
+    m_FromMain: 1
+    m_EntryOverrideCount: 1
   m_PrimaryLibraryGUID: 978ddb0a89d80724599222a8c1341f6b
-  m_ModificationHash: 638122319203201160
+  m_ModificationHash: 638638225976338588
   m_Version: 1

@@ -861,6 +861,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4606627285998651275, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_Library.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606627285998651275, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_Library.Array.data[0].m_Name
+      value: Dead
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606627285998651275, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_Library.Array.data[0].m_CategoryList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4606627285998651276, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -911,12 +923,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_labelHash
-      value: 1.1037539e-22
+      value: 1.0303437e-37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_SpriteHash
+      value: 945524360
       objectReference: {fileID: 0}
     - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_CategoryHash
       value: 0.009161512
       objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167420, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -355573278, guid: ee939c325b9cdf94599fb59f5aa357f6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1941,9 +1961,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4606627285998651276, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
+    - target: {fileID: 4606627285998651275, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_Library.Array.data[0].m_Name
+      value: Dead
       objectReference: {fileID: 0}
     - target: {fileID: 4606627285998651276, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1988,14 +2008,6 @@ PrefabInstance:
     - target: {fileID: 4606627285998651277, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_Name
       value: Skeleton (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
-      propertyPath: m_labelHash
-      value: 1.1037539e-22
-      objectReference: {fileID: 0}
-    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
-      propertyPath: m_CategoryHash
-      value: 0.009161512
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

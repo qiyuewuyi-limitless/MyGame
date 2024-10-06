@@ -35,6 +35,7 @@ namespace Gyvr.Mythril2D
 
         protected override void Die()
         {
+            // close the collider and destory the enemy object
             base.Die();
             GameManager.NotificationSystem.monsterKilled.Invoke(m_sheet);
 

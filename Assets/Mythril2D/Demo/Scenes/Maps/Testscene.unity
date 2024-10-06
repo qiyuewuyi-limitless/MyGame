@@ -194,6 +194,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_labelHash
+      value: 1.1037539e-22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_CategoryHash
+      value: 0.009161512
+      objectReference: {fileID: 0}
     - target: {fileID: 5111718041154600855, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_level
       value: 2
@@ -1430,11 +1438,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2200038757987075176, guid: 9b3901b8976d5e14bb4e46d6cc84191d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -61.22
+      value: -48.36
       objectReference: {fileID: 0}
     - target: {fileID: 2200038757987075176, guid: 9b3901b8976d5e14bb4e46d6cc84191d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -23.02
+      value: -27.52
       objectReference: {fileID: 0}
     - target: {fileID: 2200038757987075176, guid: 9b3901b8976d5e14bb4e46d6cc84191d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1492,8 +1500,25 @@ PrefabInstance:
       propertyPath: m_moveSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7464264473247923315, guid: 9b3901b8976d5e14bb4e46d6cc84191d, type: 3}
+      propertyPath: m_interaction
+      value: 3619733153034797057
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464264473247923315, guid: 9b3901b8976d5e14bb4e46d6cc84191d, type: 3}
+      propertyPath: managedReferences[3619733153034797057]
+      value: Gyvr.Mythril2D Gyvr.Mythril2D.ConditionalInteraction
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464264473247923315, guid: 9b3901b8976d5e14bb4e46d6cc84191d, type: 3}
+      propertyPath: managedReferences[3619733153034797057].m_condition
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464264473247923315, guid: 9b3901b8976d5e14bb4e46d6cc84191d, type: 3}
+      propertyPath: managedReferences[3619733153034797057].m_interaction
+      value: -2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1712708635999445180, guid: 9b3901b8976d5e14bb4e46d6cc84191d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b3901b8976d5e14bb4e46d6cc84191d, type: 3}
@@ -1865,6 +1890,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton
       objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_labelHash
+      value: 1.1037539e-22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_CategoryHash
+      value: 0.009161512
+      objectReference: {fileID: 0}
     - target: {fileID: 5111718041154600855, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_level
       value: 2
@@ -2003,6 +2036,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1798122611}
   - {fileID: 957835573}
   - {fileID: 1562791827}
   - {fileID: 1228604397}
@@ -2028,7 +2062,6 @@ Transform:
   - {fileID: 1831155013}
   - {fileID: 771770511}
   - {fileID: 2091010559}
-  - {fileID: 1798122611}
   m_Father: {fileID: 852882607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &747498232
@@ -2779,6 +2812,14 @@ PrefabInstance:
     - target: {fileID: 5385556778630311159, guid: 370aa4537e9c14059878f8e97a55501e, type: 3}
       propertyPath: m_Name
       value: Yosbar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5385556779317921035, guid: 370aa4537e9c14059878f8e97a55501e, type: 3}
+      propertyPath: m_labelHash
+      value: 1.1037539e-22
+      objectReference: {fileID: 0}
+    - target: {fileID: 5385556779317921035, guid: 370aa4537e9c14059878f8e97a55501e, type: 3}
+      propertyPath: m_CategoryHash
+      value: 0.009161512
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4038,14 +4079,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266791167}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73889d3d7a3e2774e826004f4d4b9ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_interaction:
     rid: 3619733120195493888
-  m_teleporterGameObject: {fileID: 1798122610}
+  m_teleporterGameObject: {fileID: 0}
   m_enabled: 1
   m_gameFlagID: test_1
   m_activationAudio: {fileID: 0}
@@ -4475,6 +4516,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_labelHash
+      value: 1.1037539e-22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_CategoryHash
+      value: 0.009161512
+      objectReference: {fileID: 0}
     - target: {fileID: 5111718041154600855, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_level
       value: 2
@@ -4507,11 +4556,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4374318859055615517, guid: 223129af6a40b1f41bd75e7334dd33da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -43.31
+      value: -20.79
       objectReference: {fileID: 0}
     - target: {fileID: 4374318859055615517, guid: 223129af6a40b1f41bd75e7334dd33da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -28.91
+      value: -11.13
       objectReference: {fileID: 0}
     - target: {fileID: 4374318859055615518, guid: 223129af6a40b1f41bd75e7334dd33da, type: 3}
       propertyPath: m_Icon
@@ -4568,7 +4617,7 @@ PrefabInstance:
     - target: {fileID: 6318623532161940047, guid: 223129af6a40b1f41bd75e7334dd33da, type: 3}
       propertyPath: m_saveFile
       value: 
-      objectReference: {fileID: 11400000, guid: ad9e757b3a4195841bd05e29c2f5189f, type: 2}
+      objectReference: {fileID: 11400000, guid: 888034daa68407b479a6065f2e0020e5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5683,7 +5732,7 @@ GameObject:
   - component: {fileID: 1798122614}
   - component: {fileID: 1798122613}
   - component: {fileID: 1798122612}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5698,7 +5747,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798122610}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -49.492, y: -25.538, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6019,6 +6068,14 @@ PrefabInstance:
     - target: {fileID: 4606627285998651277, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_Name
       value: Skeleton (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_labelHash
+      value: 1.1037539e-22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606627287794167409, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
+      propertyPath: m_CategoryHash
+      value: 0.009161512
       objectReference: {fileID: 0}
     - target: {fileID: 5111718041154600855, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_level

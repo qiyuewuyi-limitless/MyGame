@@ -14,9 +14,15 @@ public class Fire : MonoBehaviour
     private HashSet<Collider2D> m_collidersInTrigger = new HashSet<Collider2D>();
     private Coroutine m_damageCoroutine;
 
+    private void OnDisable()
+    {
+        Debug.Log(this);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         var character = other.gameObject.GetComponent<CharacterBase>();
+
 
         if (character != null)
         {

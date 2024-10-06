@@ -32,7 +32,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2944610150171610048}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -97,11 +96,12 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 114492376808643185, guid: d651b6984b5dae0449edf518c6bd9805, type: 3}
       propertyPath: m_Name
-      value: Ability HUD
+      value: Ability HUD Entry
       objectReference: {fileID: 0}
     - target: {fileID: 114492376808643198, guid: d651b6984b5dae0449edf518c6bd9805, type: 3}
       propertyPath: m_Pivot.x
@@ -191,7 +191,20 @@ PrefabInstance:
       propertyPath: m_controllerButton
       value: 
       objectReference: {fileID: 8624983854544759013}
+    - target: {fileID: 4702493022307091609, guid: d651b6984b5dae0449edf518c6bd9805, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 114492376808643198, guid: d651b6984b5dae0449edf518c6bd9805, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8664734206531288866}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 114492376808643185, guid: d651b6984b5dae0449edf518c6bd9805, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8447514712351701595}
   m_SourcePrefab: {fileID: 100100000, guid: d651b6984b5dae0449edf518c6bd9805, type: 3}
 --- !u!224 &2944610150171610048 stripped
 RectTransform:

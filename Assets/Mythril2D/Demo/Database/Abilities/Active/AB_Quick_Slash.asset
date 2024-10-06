@@ -18,8 +18,8 @@ MonoBehaviour:
   m_prefab: {fileID: 491574258212556329, guid: ab159b6b8fcdc09468b7aac4f6b2ece6, type: 3}
   m_manaCost: 0
   m_abilityStateManagementMode: 0
-  m_canInterupt: 0
-  m_disabledActionsWhileCasting: -1
+  m_canInterupt: 1
+  m_disabledActionsWhileCasting: 6
   m_fireAudio: {fileID: 11400000, guid: 49c23358086d87245bd56943944ef784, type: 2}
   m_damageDescriptor:
     flatDamages: 0

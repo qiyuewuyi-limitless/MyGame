@@ -64,6 +64,7 @@ namespace Gyvr.Mythril2D
             }
             else
             {
+                // will set the teleport game object disappearance
                 m_teleporterGameObject.SetActive(false);
                 m_boxCollider.GetComponent<BoxCollider2D>().enabled = true;
             }

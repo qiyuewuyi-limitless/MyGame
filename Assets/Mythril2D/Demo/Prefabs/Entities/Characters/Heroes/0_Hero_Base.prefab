@@ -5013,7 +5013,7 @@ PrefabInstance:
     - target: {fileID: 4928962304513780153, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1553765641, guid: 10b536180259ecf40853d1d602292b69, type: 3}
+      objectReference: {fileID: 332323151, guid: 10b536180259ecf40853d1d602292b69, type: 3}
     - target: {fileID: 7402011664384171461, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_target
       value: 

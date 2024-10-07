@@ -141,12 +141,15 @@ namespace Gyvr.Mythril2D
 
         private void OnDash(InputAction.CallbackContext context)
         {
-            if (IsPlayingDashAnimation() == false)
-            {
-                m_dirction =
+
+            m_dirction =
                     m_character.IsMoving() ?
                     m_character.movementDirection :
                     (m_character.GetLookAtDirection() == EDirection.Right ? Vector2.right : Vector2.left);
+
+            if (IsPlayingDashAnimation() == false)
+            {
+                
             }
 
             m_character.Push(m_dirction, m_dashStrength, m_dashResistance, faceOppositeDirection: true);

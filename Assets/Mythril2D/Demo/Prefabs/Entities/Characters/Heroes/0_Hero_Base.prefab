@@ -4996,15 +4996,15 @@ PrefabInstance:
       objectReference: {fileID: 7108339969198208228, guid: b9ecfa9b6e9b64b45a25499d6107d6ec, type: 3}
     - target: {fileID: 4928962304513780148, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_labelHash
-      value: 1.0303437e-37
+      value: 1.1037539e-22
       objectReference: {fileID: 0}
     - target: {fileID: 4928962304513780148, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_SpriteHash
-      value: 692080556
+      value: 559079218
       objectReference: {fileID: 0}
     - target: {fileID: 4928962304513780148, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_CategoryHash
-      value: 1.0429618e-14
+      value: 0.003363743
       objectReference: {fileID: 0}
     - target: {fileID: 4928962304513780152, guid: 35b65aa833459fb48a5da6b625c71835, type: 3}
       propertyPath: m_Controller

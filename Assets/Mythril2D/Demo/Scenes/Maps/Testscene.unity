@@ -2890,6 +2890,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Yosbar
       objectReference: {fileID: 0}
+    - target: {fileID: 5385556779317921030, guid: 370aa4537e9c14059878f8e97a55501e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -714866815, guid: 7dc5e1c866cc5486fb4b1fe18f4691b0, type: 3}
     - target: {fileID: 5385556779317921035, guid: 370aa4537e9c14059878f8e97a55501e, type: 3}
       propertyPath: m_labelHash
       value: 1.1037539e-22

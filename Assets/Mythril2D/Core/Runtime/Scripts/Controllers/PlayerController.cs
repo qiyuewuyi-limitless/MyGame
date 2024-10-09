@@ -27,7 +27,8 @@ namespace Gyvr.Mythril2D
         private Vector2 m_movementDirection;
         private Transform m_interactionPivot = null;
 
-        private GameObject m_interactionTarget = null;
+        public GameObject m_interactionTarget = null;
+        //private GameObject m_interactionTarget = null;
 
         private void Awake()
         {
@@ -76,10 +77,10 @@ namespace Gyvr.Mythril2D
 
         private void Update()
         {
-            m_interactionTarget = GetInteractibleObject();
+            //m_interactionTarget = GetInteractibleObject();
         }
 
-        private GameObject GetInteractibleObject()
+        public GameObject GetInteractibleObject()
         {
             if (m_character.Can(EActionFlags.Interact))
             {
@@ -105,16 +106,23 @@ namespace Gyvr.Mythril2D
 
         private bool TryInteracting()
         {
-            GameObject interactionTarget = GetInteractibleObject();
+            Debug.Log("Trying Interaction");
+            //GameObject interactionTarget = GetInteractibleObject();
 
             if (interactionTarget)
             {
-                GameManager.NotificationSystem.audioPlaybackRequested.Invoke(m_interactionSound);
-                interactionTarget.SendMessageUpwards("OnInteract", m_character);
+                ActiveInteracting();
                 return true;
             }
 
             return false;
+        }
+
+        private void ActiveInteracting()
+        {
+            Debug.Log("Active Interaction");
+            GameManager.NotificationSystem.audioPlaybackRequested.Invoke(m_interactionSound);
+            interactionTarget.SendMessageUpwards("OnInteract", m_character);
         }
 
         private void OnOpenGameMenu(InputAction.CallbackContext context)
@@ -149,7 +157,7 @@ namespace Gyvr.Mythril2D
 
             if (IsPlayingDashAnimation() == false)
             {
-                
+                //Debug.Log("Playing Dash Animation false");
             }
 
             m_character.Push(m_dirction, m_dashStrength, m_dashResistance, faceOppositeDirection: true);
@@ -157,7 +165,6 @@ namespace Gyvr.Mythril2D
             {
                 m_dashParticleSystem.Play();
             }
-
 
             m_character.TryPlayDashAnimation();
         }

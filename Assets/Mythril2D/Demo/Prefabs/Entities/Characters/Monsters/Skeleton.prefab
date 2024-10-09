@@ -92,6 +92,22 @@ PrefabInstance:
       propertyPath: m_CategoryHash
       value: 0.009161512
       objectReference: {fileID: 0}
+    - target: {fileID: 1545969294778060163, guid: d2b0f6d4ebcd9ce44a4dafe88555f702, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545969294778060163, guid: d2b0f6d4ebcd9ce44a4dafe88555f702, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545969294778060163, guid: d2b0f6d4ebcd9ce44a4dafe88555f702, type: 3}
+      propertyPath: m_ForceSendLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545969294778060163, guid: d2b0f6d4ebcd9ce44a4dafe88555f702, type: 3}
+      propertyPath: m_ForceReceiveLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 2530395677784289797, guid: d2b0f6d4ebcd9ce44a4dafe88555f702, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

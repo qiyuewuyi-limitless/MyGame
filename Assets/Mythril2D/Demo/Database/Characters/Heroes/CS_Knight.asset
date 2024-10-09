@@ -24,7 +24,7 @@ MonoBehaviour:
   m_hitAudio: {fileID: 11400000, guid: a4e5377a4fc466b41889cf9f0874ca00, type: 2}
   m_deathAudio: {fileID: 11400000, guid: fd5c086ec9cf4fc4d9e15ce421be7aff, type: 2}
   baseStats:
-    m_values: 0500000005000000050000000500000005000000050000000500000005000000
+    m_values: 50c3000005000000050000000500000005000000050000000500000005000000
   pointsPerLevel: 3
   experience:
     m_initialValue: 100

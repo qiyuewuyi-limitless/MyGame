@@ -1,8 +1,11 @@
+using Codice.CM.Common;
 using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Gyvr.Mythril2D
 {
@@ -421,6 +424,7 @@ namespace Gyvr.Mythril2D
                 if (damageInput.damage > 0)
                 {
                     InterruptActions();
+
                     TryPlayHitAnimation();
 
                     m_currentStats[EStat.Health] -= math.min(damageInput.damage, m_currentStats[EStat.Health]);
@@ -652,9 +656,33 @@ namespace Gyvr.Mythril2D
                     direction, // X and Y values between -1 and 1 that represent the direction from the body to look for collisions
                     GameManager.Config.collisionContactFilter, // The settings that determine where a collision can occur on such as layers to collide with
                     m_castCollisions, // List of collisions to store the found collisions into after the Cast is finished
-                    speed * Time.fixedDeltaTime + Constants.CollisionOffset); // The amount to cast equal to the movement plus an offset
+                    speed * Time.fixedDeltaTime + Constants.CollisionOffset
+                ); // The amount to cast equal to the movement plus an offset
 
-                if (count == 0)
+                //Collider2D[] colliders = Physics2D.OverlapCircleAll(m_rigidbody.transform.position, 0.75f, LayerMask.GetMask(GameManager.Config.interactionLayer));
+                //Collider2D[] colliders = Physics2D.OverlapCircleAll(m_rigidbody.transform.position, 0.3f, LayerMask.GetMask(GameManager.Config.interactionLayer));
+                //bool isAllColliderInteracted = true;
+                //foreach (Collider2D collider in colliders)
+                //{
+                //    if (collider.gameObject != this.gameObject)
+                //    {
+                //        Debug.Log("count = " + count + collider.transform.name + " " + collider.gameObject.layer);
+                //        if (collider.gameObject.layer == LayerMask.GetMask(GameManager.Config.interactionLayer))
+                //        {
+                //            Debug.Log("isAllColliderInteracted false");
+                //            isAllColliderInteracted = false;
+                //        }
+                //    }
+                //}
+
+                //count = math.max(0, count-colliders.Length);
+                //Debug.Log("count = " + count);
+
+                //if (count == 0 && isAllColliderInteracted == true)
+                // 使用移动对象位置和设置可以穿过碰撞体都不太合理，会产生太多需要额外判断的条件
+                // 如果单一使用可能还能接受，但如果考虑到其他对象环境等碰撞体的话，就要囊括更多的判断条件
+
+                if (count == 0 )
                 {
                     m_lastSuccessfullMoveDirection = direction * speed;
                     m_rigidbody.MovePosition(m_rigidbody.position + direction * speed * Time.fixedDeltaTime);
@@ -662,6 +690,7 @@ namespace Gyvr.Mythril2D
                 }
                 else
                 {
+                    //Debug.Log("else false");
                     return false;
                 }
             }
@@ -714,6 +743,14 @@ namespace Gyvr.Mythril2D
                 //Debug.Log("directionToFace " + (directionToFace > 0 ? EDirection.Right : EDirection.Left));
             }
         }
+        public void AvoidOverlapped(Vector2 direction)
+        {
+            Debug.Log("AvoidOverlapped" + gameObject.transform.name);
+            //m_rigidbody.MovePosition(m_rigidbody.position + direction);
+            Vector2 resultPos = m_rigidbody.position + direction;
+            m_rigidbody.position = new Vector2(resultPos.x, resultPos.y);
+        }
+
         #endregion
     }
 }

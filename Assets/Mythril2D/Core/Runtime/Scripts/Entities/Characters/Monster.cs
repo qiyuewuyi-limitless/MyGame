@@ -1,5 +1,10 @@
+using Codice.CM.Client.Differences;
+using Codice.CM.Common;
 using System;
+using System.Threading;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Gyvr.Mythril2D
 {
@@ -62,13 +67,19 @@ namespace Gyvr.Mythril2D
             }
             else
             {
-                Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+                //Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
                 //Array.ForEach(colliders, (collider) => collider.enabled = false);
 
                 // cancel the playing animation
-                transform.Find("Pivot").gameObject.SetActive(false);
+                this.transform.Find("Pivot").gameObject.SetActive(false);
 
-                SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Interaction"));
+                //CheckOverlappedObject();
+
+
+                CapsuleCollider2D m_capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
+                m_capsuleCollider.isTrigger = true;
+
+                //SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Interaction"));
             }
         }
 
@@ -88,10 +99,10 @@ namespace Gyvr.Mythril2D
                 OnDeath();
 
                 // cancel interaction
-                SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Default"));
+                //SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Default"));
 
                 //animator.SetBool(m_isLootedAnimationParameter, true); private key
-                animator.SetBool("isLooted", true);
+                //animator.SetBool("isLooted", true);
 
                 m_looted = true;
 
@@ -100,13 +111,85 @@ namespace Gyvr.Mythril2D
             return false;
         }
 
+        //void OnTriggerStay(Collider collisionInfo)
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (String.Equals(other.gameObject.tag, "Player") == true)
+            {
+                Debug.Log("Monster Interaction");
+                GameManager.PlayerSystem.PlayerInstance.GetComponent<PlayerController>().m_interactionTarget = this.gameObject;
+                //GameManager.PlayerSystem.PlayerInstance.GetComponent<PlayerController>().GetInteractibleObject();
+            }
+        }
+
+        //void OnTriggerStay(Collider collisionInfo)
+        void OnTriggerExit2D(Collider2D other)
+        {
+            if (String.Equals(other.gameObject.tag, "Player") == true)
+            {
+                GameManager.PlayerSystem.PlayerInstance.GetComponent<PlayerController>().m_interactionTarget = null;
+            }
+        }
+
         private static void SetLayerRecursively(GameObject go, int layer)
         {
             go.layer = layer;
-            // dont change the child layer 
-            //var t = go.transform;
-            //for (var i = 0; i < t.childCount; i++)
-            //    SetLayerRecursively(t.GetChild(i).gameObject, layer);
         }
+
+        private void CheckOverlappedObject()
+        {
+            // get the collider max radius
+            CapsuleCollider2D m_capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
+            Vector2 t_size = m_capsuleCollider.size;
+            //Debug.Log("hello");
+            //Debug.Log("tmp.x = " + tmp.y);
+            //Debug.Log("tmp.y = " + tmp.y);
+
+            //Collider2D[] colliders = Physics2D.OverlapCircleAll(this.transform.position, 0.8f, LayerMask.GetMask(GameManager.Config.mosterLayer));
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(m_capsuleCollider.transform.position, 0.8f, LayerMask.GetMask(GameManager.Config.mosterLayer));
+
+            foreach (Collider2D collider in colliders)
+            {
+                if((collider.transform == m_capsuleCollider.transform) == false)
+                {
+                    ColliderDistance2D colliderDistance = m_capsuleCollider.Distance(collider);
+
+                    // draw a line showing the depenetration direction if overlapped
+                    if (colliderDistance.isOverlapped)
+                    {
+                        //Debug.Log("isOverlapped");
+                        //Debug.Log("die object = " + m_capsuleCollider.gameObject.transform.name);
+                        //Debug.Log("stuck object = " + collider.gameObject.transform.name);
+                        //Debug.Log("original stuck object x, y = " + collider.gameObject.transform.position.x.ToString() + collider.gameObject.transform.position.y.ToString());
+
+                        Vector2 resolutionVector = Mathf.Abs(colliderDistance.distance) * colliderDistance.normal;
+                        Vector2 t_position = collider.gameObject.transform.position;
+                        //collider.gameObject.transform.position.x += resolutionVector.x;
+                        //collider.gameObject.transform.position.y += resolutionVector.y;
+
+                        t_position.x += (resolutionVector.x * 2);
+                        t_position.y += (resolutionVector.y * 2);
+
+                        //t_position.x += (resolutionVector.x * -2);
+                        //t_position.y += (resolutionVector.y * -2);
+
+                        //Debug.Log("t_position x, y = " + t_position.x.ToString() + t_position.y.ToString());
+
+                        //collider.gameObject.transform.position.Set(t_position.x, t_position.y, collider.gameObject.transform.position.z);
+                        //collider.gameObject.transform.position = new Vector3(t_position.x, t_position.y, collider.gameObject.transform.position.z);
+
+                        GameObject target = collider.gameObject;
+                        target.GetComponent<CharacterBase>().AvoidOverlapped(resolutionVector);
+
+                        //Debug.Log("resolutionVector x, y = " + resolutionVector.x.ToString() + resolutionVector.y.ToString());
+                        //Debug.Log("After stuck object x, y = " + collider.gameObject.transform.position.x.ToString() + collider.gameObject.transform.position.y.ToString());
+
+                        // 感觉从游戏效果来看，似乎并没有直观看到怪物有任何移动的变化，感觉并没有真正去移动怪物的位置
+                        // 不知道如果用协程去执行会有什么效果
+                    }
+                }
+            }
+        }
+
     }
 }

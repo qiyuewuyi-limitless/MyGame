@@ -55,6 +55,7 @@ namespace Gyvr.Mythril2D
         public string gameplayScene = "Gameplay";
         public string mainMenuSceneName = "Main Menu";
         public string interactionLayer = "Interaction";
+        public string mosterLayer = "Default";
         public string projectileLayer = "Projectile";
         public string hitboxLayer = "Hitbox";
         public string[] layersIgnoredByProjectiles;

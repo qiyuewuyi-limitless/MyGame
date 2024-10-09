@@ -173,7 +173,8 @@ namespace Gyvr.Mythril2D
                     direction, // X and Y values between -1 and 1 that represent the direction from the body to look for collisions
                     GameManager.Config.collisionContactFilter, // The settings that determine where a collision can occur on such as layers to collide with
                     m_castCollisions, // List of collisions to store the found collisions into after the Cast is finished
-            1.0f); // The amount to cast equal to the movement plus an offset
+                    1.0f
+            ); // The amount to cast equal to the movement plus an offset
 
             m_dangers[index] = count > 0 ? 1.0f - m_castCollisions[0].distance : 0.0f;
         }

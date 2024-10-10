@@ -113,6 +113,8 @@ namespace Gyvr.Mythril2D
         protected ObservableStats m_stats = new ObservableStats();
         private UnityEvent m_destroyed = new UnityEvent();
 
+        private bool m_deleteLayerMask = false;
+
         // Move Private Members
         private List<RaycastHit2D> m_castCollisions = new List<RaycastHit2D>();
         private Vector2 m_movementDirection;
@@ -135,6 +137,12 @@ namespace Gyvr.Mythril2D
 
             CheckForAnimations();
             InitializeAbilities();
+
+            // 放这里还没开始实例化 会报错
+            //int layermask = GameManager.Config.collisionContactFilter.layerMask;
+            //layermask &= ~(1 << 6);
+            //GameManager.Config.collisionContactFilter.layerMask = layermask;
+
         }
 
         private void OnDestroy()
@@ -544,6 +552,31 @@ namespace Gyvr.Mythril2D
         // TODO: Make prettier
         private void FixedUpdate()
         {
+            if(m_deleteLayerMask == false)
+            {
+
+                // 为什么会穿过敌人？
+
+                // the default GameManager.Config.collisionContactFilter.layerMask is NULL
+                //LayerMask originalLayerMask = GameManager.Config.collisionContactFilter.layerMask; 
+                //originalLayerMask |= (1 << LayerMask.GetMask(GameManager.Config.interactionLayer));
+
+                //LayerMask originalLayerMask = (1 << 6);
+                //int layer = ~(1 << 0);
+                //layer &= ~(1 << 0);
+                //layer &= ~(1 << 6);
+                //layer &= ~(1 << 6);
+                //layer &= ~(1 << 9);
+                //layer &= ~(1 << 10);
+                //layer &= ~(1 << 11);
+                int layermask = GameManager.Config.collisionContactFilter.layerMask;
+                layermask &= ~(1 << 6);
+                GameManager.Config.collisionContactFilter.layerMask = layermask;
+                //Debug.Log("layerMask = " + layermask);
+                //Debug.Log("layerMask = " + GameManager.Config.collisionContactFilter.layerMask);
+                m_deleteLayerMask = true;
+            }
+
             if (m_pushed)
             {
                 if (m_pushIntensity > 0.2f)
@@ -651,52 +684,58 @@ namespace Gyvr.Mythril2D
         {
             if (direction != Vector2.zero)
             {
-                // Check for potential collisions
-                int count = m_rigidbody.Cast(
-                    direction, // X and Y values between -1 and 1 that represent the direction from the body to look for collisions
-                    GameManager.Config.collisionContactFilter, // The settings that determine where a collision can occur on such as layers to collide with
-                    m_castCollisions, // List of collisions to store the found collisions into after the Cast is finished
-                    speed * Time.fixedDeltaTime + Constants.CollisionOffset
-                ); // The amount to cast equal to the movement plus an offset
-
-                //Collider2D[] colliders = Physics2D.OverlapCircleAll(m_rigidbody.transform.position, 0.75f, LayerMask.GetMask(GameManager.Config.interactionLayer));
-                //Collider2D[] colliders = Physics2D.OverlapCircleAll(m_rigidbody.transform.position, 0.3f, LayerMask.GetMask(GameManager.Config.interactionLayer));
-                //bool isAllColliderInteracted = true;
-                //foreach (Collider2D collider in colliders)
-                //{
-                //    if (collider.gameObject != this.gameObject)
-                //    {
-                //        Debug.Log("count = " + count + collider.transform.name + " " + collider.gameObject.layer);
-                //        if (collider.gameObject.layer == LayerMask.GetMask(GameManager.Config.interactionLayer))
-                //        {
-                //            Debug.Log("isAllColliderInteracted false");
-                //            isAllColliderInteracted = false;
-                //        }
-                //    }
-                //}
-
-                //count = math.max(0, count-colliders.Length);
-                //Debug.Log("count = " + count);
-
-                //if (count == 0 && isAllColliderInteracted == true)
-                // 使用移动对象位置和设置可以穿过碰撞体都不太合理，会产生太多需要额外判断的条件
-                // 如果单一使用可能还能接受，但如果考虑到其他对象环境等碰撞体的话，就要囊括更多的判断条件
-
-                if (count == 0 )
-                {
-                    m_lastSuccessfullMoveDirection = direction * speed;
-                    m_rigidbody.MovePosition(m_rigidbody.position + direction * speed * Time.fixedDeltaTime);
-                    return true;
-                }
-                else
-                {
-                    //Debug.Log("else false");
-                    return false;
-                }
+                return MovePositionByRigidboy(direction, speed);
             }
             else
             {
                 // Can't move if there's no direction to move in
+                return false;
+            }
+        }
+
+        private bool MovePositionByRigidboy(Vector2 direction, float speed)
+        {
+            // Check for potential collisions
+            int count = m_rigidbody.Cast(
+                direction, // X and Y values between -1 and 1 that represent the direction from the body to look for collisions
+                GameManager.Config.collisionContactFilter, // The settings that determine where a collision can occur on such as layers to collide with
+                m_castCollisions, // List of collisions to store the found collisions into after the Cast is finished
+                speed * Time.fixedDeltaTime + Constants.CollisionOffset
+            ); // The amount to cast equal to the movement plus an offset
+
+
+            //Collider2D[] colliders = Physics2D.OverlapCircleAll(m_rigidbody.transform.position, 0.75f, LayerMask.GetMask(GameManager.Config.interactionLayer));
+            //Collider2D[] colliders = Physics2D.OverlapCircleAll(m_rigidbody.transform.position, 0.3f, LayerMask.GetMask(GameManager.Config.interactionLayer));
+            //bool isAllColliderInteracted = true;
+            //foreach (Collider2D collider in colliders)
+            //{
+            //    if (collider.gameObject != this.gameObject)
+            //    {
+            //        Debug.Log("count = " + count + collider.transform.name + " " + collider.gameObject.layer);
+            //        if (collider.gameObject.layer == LayerMask.GetMask(GameManager.Config.interactionLayer))
+            //        {
+            //            Debug.Log("isAllColliderInteracted false");
+            //            isAllColliderInteracted = false;
+            //        }
+            //    }
+            //}
+
+            //count = math.max(0, count-colliders.Length);
+            //Debug.Log("count = " + count);
+
+            //if (count == 0 && isAllColliderInteracted == true)
+            // 使用移动对象位置和设置可以穿过碰撞体都不太合理，会产生太多需要额外判断的条件
+            // 如果单一使用可能还能接受，但如果考虑到其他对象环境等碰撞体的话，就要囊括更多的判断条件
+
+            if (count == 0)
+            {
+                m_lastSuccessfullMoveDirection = direction * speed;
+                m_rigidbody.MovePosition(m_rigidbody.position + direction * speed * Time.fixedDeltaTime);
+                return true;
+            }
+            else
+            {
+                //Debug.Log("else false");
                 return false;
             }
         }

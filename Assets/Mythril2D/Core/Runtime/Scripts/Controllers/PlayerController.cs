@@ -77,7 +77,7 @@ namespace Gyvr.Mythril2D
 
         private void Update()
         {
-            //m_interactionTarget = GetInteractibleObject();
+            m_interactionTarget = GetInteractibleObject();
         }
 
         public GameObject GetInteractibleObject()
@@ -106,8 +106,8 @@ namespace Gyvr.Mythril2D
 
         private bool TryInteracting()
         {
-            Debug.Log("Trying Interaction");
-            //GameObject interactionTarget = GetInteractibleObject();
+            //Debug.Log("Trying Interaction");
+            GameObject interactionTarget = GetInteractibleObject();
 
             if (interactionTarget)
             {
@@ -120,7 +120,7 @@ namespace Gyvr.Mythril2D
 
         private void ActiveInteracting()
         {
-            Debug.Log("Active Interaction");
+            //Debug.Log("Active Interaction");
             GameManager.NotificationSystem.audioPlaybackRequested.Invoke(m_interactionSound);
             interactionTarget.SendMessageUpwards("OnInteract", m_character);
         }

@@ -72,14 +72,15 @@ namespace Gyvr.Mythril2D
 
                 // cancel the playing animation
                 this.transform.Find("Pivot").gameObject.SetActive(false);
-
+                //GameObject lootbox = this.transform.Find("Lootbox").gameObject;
+                //lootbox.SetActive(true);
                 //CheckOverlappedObject();
 
 
-                CapsuleCollider2D m_capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
-                m_capsuleCollider.isTrigger = true;
+                //CapsuleCollider2D m_capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
+                //m_capsuleCollider.isTrigger = true;
 
-                //SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Interaction"));
+                SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Interaction"));
             }
         }
 
@@ -117,6 +118,7 @@ namespace Gyvr.Mythril2D
             if (String.Equals(other.gameObject.tag, "Player") == true)
             {
                 Debug.Log("Monster Interaction");
+                Debug.Log("GameManager.Config.collisionContactFilter = " + GameManager.Config.collisionContactFilter);
                 GameManager.PlayerSystem.PlayerInstance.GetComponent<PlayerController>().m_interactionTarget = this.gameObject;
                 //GameManager.PlayerSystem.PlayerInstance.GetComponent<PlayerController>().GetInteractibleObject();
             }

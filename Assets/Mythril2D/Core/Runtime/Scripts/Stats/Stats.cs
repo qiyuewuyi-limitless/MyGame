@@ -8,12 +8,13 @@ namespace Gyvr.Mythril2D
     {
         Health = 0,
         Mana = 1,
-        PhysicalAttack = 2,
-        MagicalAttack = 3,
-        PhysicalDefense = 4,
-        MagicalDefense = 5,
-        Agility = 6,
-        Luck = 7
+        Stamina = 2,
+        PhysicalAttack = 3,
+        MagicalAttack = 4,
+        PhysicalDefense = 5,
+        MagicalDefense = 6,
+        Agility = 7,
+        Luck = 8,
     }
 
     [Serializable]
@@ -22,11 +23,11 @@ namespace Gyvr.Mythril2D
         public const int MinLevel = 1;
         public const int MaxLevel = 20;
         public const int LevelCount = MaxLevel - MinLevel + 1;
-        public const int StatCount = 8;
+        public const int StatCount = 9;
 
-        [SerializeField] private int[] m_values = new int[StatCount] { 0, 0, 0, 0, 0, 0, 0, 0 };
+        [SerializeField] private int[] m_values = new int[StatCount] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-        public Stats() : this(new int[StatCount] { 0, 0, 0, 0, 0, 0, 0, 0 })
+        public Stats() : this(new int[StatCount] { 0, 0, 0, 0, 0, 0, 0, 0, 0 })
         {
         }
 
@@ -103,8 +104,9 @@ namespace Gyvr.Mythril2D
             for (int i = 0; i < StatCount; ++i)
             {
                 output[i] = (int)math.floor(a[i] * scale);
+                Debug.Log(i);
+                Debug.Log(StatCount);
             }
-
             return output;
         }
 

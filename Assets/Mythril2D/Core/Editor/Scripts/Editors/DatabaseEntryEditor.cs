@@ -18,6 +18,7 @@ namespace Gyvr.Mythril2D
             {
                 EditorGUILayout.HelpBox("No DatabaseRegistry found! This DatabaseEntry won't be usable", MessageType.Error);
             }
+
             else
             {
                 uint pureReferenceCount = 0;

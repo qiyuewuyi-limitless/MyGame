@@ -4850,11 +4850,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4606627285998651275, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_Library.Array.data[0].m_Name
-      value: Dead
+      value: Parts
       objectReference: {fileID: 0}
     - target: {fileID: 4606627285998651275, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_Library.Array.data[0].m_CategoryList.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4606627285998651276, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_RootOrder
@@ -8898,11 +8898,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4606627285998651276, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.15
+      value: -17.49
       objectReference: {fileID: 0}
     - target: {fileID: 4606627285998651276, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.73
+      value: -8.99
       objectReference: {fileID: 0}
     - target: {fileID: 4606627285998651276, guid: fd93fdeb631d5c443b5a285840c2625e, type: 3}
       propertyPath: m_LocalPosition.z

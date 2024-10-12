@@ -20,7 +20,7 @@ namespace Gyvr.Mythril2D
         {
             SerializedProperty property = serializedObject.GetIterator();
             property.NextVisible(true); // Move to the first property (skip "m_Script")
-
+                
             // Start drawing the remaining properties
             while (property.NextVisible(false))
             {

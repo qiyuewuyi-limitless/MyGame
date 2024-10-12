@@ -29,7 +29,7 @@ namespace Gyvr.Mythril2D
             int average = (int)math.round(total / 5.0f);
 
             GUI.enabled = false;
-            EditorGUILayout.IntField("Health", previewStats[EStat.Health]);
+            sheet.stats[m_previewLevel][EStat.Health] = EditorGUILayout.IntField("Health", previewStats[EStat.Health]);
             EditorGUILayout.IntField("Mana", previewStats[EStat.Mana]);
             EditorGUILayout.IntField("Physical Attack", previewStats[EStat.PhysicalAttack]);
             EditorGUILayout.IntField("Magical Attack", previewStats[EStat.MagicalAttack]);
@@ -44,7 +44,7 @@ namespace Gyvr.Mythril2D
             EditorGUILayout.IntField("Experience", experience);
             EditorGUILayout.IntField("Money", money);
             EditorGUILayout.Space();
-            GUI.enabled = true;
+             GUI.enabled = true;
         }
     }
 }

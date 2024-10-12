@@ -149,33 +149,10 @@ namespace Gyvr.Mythril2D
             //GameManager.Config.collisionContactFilter.layerMask = layermask;
         }
 
-        protected virtual void Start()
-        {
-            if (m_deleteLayerMask == false)
-            {
-
-                // 为什么会穿过敌人？
-
-                // the default GameManager.Config.collisionContactFilter.layerMask is NULL
-                //LayerMask originalLayerMask = GameManager.Config.collisionContactFilter.layerMask; 
-                //originalLayerMask |= (1 << LayerMask.GetMask(GameManager.Config.interactionLayer));
-
-                //LayerMask originalLayerMask = (1 << 6);
-                //int layer = ~(1 << 0);
-                //layer &= ~(1 << 0);
-                //layer &= ~(1 << 6);
-                //layer &= ~(1 << 6);
-                //layer &= ~(1 << 9);
-                //layer &= ~(1 << 10);
-                //layer &= ~(1 << 11);
-                int layermask = GameManager.Config.collisionContactFilter.layerMask;
-                layermask &= ~(1 << 6);
-                GameManager.Config.collisionContactFilter.layerMask = layermask;
-                //Debug.Log("layerMask = " + layermask);
-                //Debug.Log("layerMask = " + GameManager.Config.collisionContactFilter.layerMask);
-                m_deleteLayerMask = true;
-            }
-        }
+        // 好像不能写 start 后面的子类还有其他方法要执行
+        //protected void Start()
+        //{
+        //}
 
         private void OnDestroy()
         {
@@ -636,6 +613,31 @@ namespace Gyvr.Mythril2D
 
         private void FixedUpdate()
         {
+
+            if (m_deleteLayerMask == false)
+            {
+                // 为什么会穿过敌人？
+
+                // the default GameManager.Config.collisionContactFilter.layerMask is NULL
+                //LayerMask originalLayerMask = GameManager.Config.collisionContactFilter.layerMask; 
+                //originalLayerMask |= (1 << LayerMask.GetMask(GameManager.Config.interactionLayer));
+
+                //LayerMask originalLayerMask = (1 << 6);
+                //int layer = ~(1 << 0);
+                //layer &= ~(1 << 0);
+                //layer &= ~(1 << 6);
+                //layer &= ~(1 << 6);
+                //layer &= ~(1 << 9);
+                //layer &= ~(1 << 10);
+                //layer &= ~(1 << 11);
+                int layermask = GameManager.Config.collisionContactFilter.layerMask;
+                layermask &= ~(1 << 6);
+                GameManager.Config.collisionContactFilter.layerMask = layermask;
+                //Debug.Log("layerMask = " + layermask);
+                //Debug.Log("layerMask = " + GameManager.Config.collisionContactFilter.layerMask);
+                m_deleteLayerMask = true;
+            }
+
             if (m_pushed)
             {
                 if (m_pushIntensity > 0.2f)
@@ -673,7 +675,6 @@ namespace Gyvr.Mythril2D
             }
 
             m_animator.SetBool(m_isMovingAnimationParameter, m_lastSuccessfullMoveDirection.magnitude > 0.0f);
-            //m_animator.SetBool(m_isRunningAnimationParameter, m_lastSuccessfullMoveDirection.magnitude > 0.0f);
 
             if (m_movementMode == EMovementMode.Polydirectional)
             {
@@ -782,7 +783,7 @@ namespace Gyvr.Mythril2D
             //}
 
             //count = math.max(0, count-colliders.Length);
-            //Debug.Log("count = " + count);
+            Debug.Log("count = " + count);
 
             //if (count == 0 && isAllColliderInteracted == true)
             // 使用移动对象位置和设置可以穿过碰撞体都不太合理，会产生太多需要额外判断的条件

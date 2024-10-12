@@ -2,6 +2,7 @@ using Codice.CM.Common;
 using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -297,6 +298,7 @@ namespace Gyvr.Mythril2D
             {
                 FireAbility((ITriggerableAbility)abilityBase);
             }
+
             else
             {
                 Debug.LogError($"Could not find triggerable ability matching ability sheet [{sheet.name}]");
@@ -313,6 +315,7 @@ namespace Gyvr.Mythril2D
 
                 bool isAbilityStateAutomaticallyManaged = abilityBase.abilitySheet.abilityStateManagementMode == AbilitySheet.EAbilityStateManagementMode.Automatic;
 
+                // set ability object (Pivot) active
                 if (isAbilityStateAutomaticallyManaged)
                 {
                     abilityBase.gameObject.SetActive(true);
@@ -477,6 +480,19 @@ namespace Gyvr.Mythril2D
         {
             m_currentStats[EStat.Mana] -= math.min(value, m_currentStats[EStat.Mana]);
             GameManager.NotificationSystem.manaConsumed.Invoke(this, value);
+        }
+
+        public void ConsumeStamina(int value)
+        {
+            m_currentStats[EStat.Stamina] -= math.min(value, m_currentStats[EStat.Stamina]);
+            GameManager.NotificationSystem.manaConsumed.Invoke(this, value);
+
+            //Debug.Log("m_currentStats[EStat.Stamina] = " + m_currentStats[EStat.Stamina]);
+        }
+
+        public void DashConsumeStamina()
+        {
+            
         }
 
         public void EnableActions(EActionFlags actions)
@@ -780,6 +796,8 @@ namespace Gyvr.Mythril2D
                 SetLookAtDirection(directionToFace > 0 ? EDirection.Right : EDirection.Left);
 
                 //Debug.Log("directionToFace " + (directionToFace > 0 ? EDirection.Right : EDirection.Left));
+
+
             }
         }
         public void AvoidOverlapped(Vector2 direction)

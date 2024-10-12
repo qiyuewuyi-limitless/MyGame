@@ -104,8 +104,8 @@ namespace Gyvr.Mythril2D
             for (int i = 0; i < StatCount; ++i)
             {
                 output[i] = (int)math.floor(a[i] * scale);
-                Debug.Log(i);
-                Debug.Log(StatCount);
+                //Debug.Log(i);
+                //Debug.Log(StatCount);
             }
             return output;
         }

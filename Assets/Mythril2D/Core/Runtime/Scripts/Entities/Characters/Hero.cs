@@ -18,6 +18,7 @@ namespace Gyvr.Mythril2D
         public int availablePoints => m_sheet.pointsPerLevel * (m_level - Stats.MinLevel) - m_usedPoints;
         public SerializableDictionary<EEquipmentType, Equipment> equipments => m_equipments;
         public AbilitySheet[] equippedAbilities => m_equippedAbilities;
+        public DashAbilitySheet dashAbility => m_dashAbility;
         public HashSet<AbilitySheet> bonusAbilities => m_bonusAbilities;
         public UnityEvent<AbilitySheet[]> equippedAbilitiesChanged => m_equippedAbilitiesChanged;
         public Stats customStats => m_customStats;
@@ -32,7 +33,14 @@ namespace Gyvr.Mythril2D
         private int m_experience = 0;
         private SerializableDictionary<EEquipmentType, Equipment> m_equipments = new SerializableDictionary<EEquipmentType, Equipment>();
         private HashSet<AbilitySheet> m_bonusAbilities = new HashSet<AbilitySheet>();
+
         private AbilitySheet[] m_equippedAbilities = new AbilitySheet[MaxEquipedAbilityCount];
+
+        // 这里用的话，得在人物sheet下面导入对应的 abilitysheet
+        private DashAbilitySheet m_dashAbility = null;
+        //ScriptableObject.ctor is not allowed to be called from a MonoBehaviour constructor (or instance field initializer), call it in Awake or Start instead. 
+        //private DashAbilitySheet m_dashAbility = ScriptableObject.CreateInstance<DashAbilitySheet>();
+
         private UnityEvent<AbilitySheet[]> m_equippedAbilitiesChanged = new UnityEvent<AbilitySheet[]>();
 
         public int GetTotalExpRequirement(int level)
@@ -126,6 +134,25 @@ namespace Gyvr.Mythril2D
                 m_bonusAbilities.Remove(ability);
                 RemoveAbility(ability);
             }
+        }
+
+        private bool AddDashAbility(DashAbilitySheet ability)
+        {
+            if (base.AddAbility(ability))
+            {
+                if (!IsAbilityEquiped(ability))
+                {
+                    for (int i = 0; i < m_equippedAbilities.Length; ++i)
+                    {
+                        m_dashAbility = ability;
+                    }
+                }
+
+                GameManager.NotificationSystem.abilityAdded.Invoke(ability);
+                return true;
+            }
+
+            return false;
         }
 
         protected override bool AddAbility(AbilitySheet ability)
@@ -250,6 +277,8 @@ namespace Gyvr.Mythril2D
             {
                 AddExperience(block.experience, true);
             }
+
+            AddDashAbility(m_sheet.GetDashAbility());
 
             foreach (var ability in block.bonusAbilities)
             {

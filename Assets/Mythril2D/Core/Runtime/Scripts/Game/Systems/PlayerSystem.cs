@@ -15,6 +15,7 @@ namespace Gyvr.Mythril2D
         public DatabaseEntryReference<Equipment>[] equipments;
         public DatabaseEntryReference<AbilitySheet>[] bonusAbilities;
         public DatabaseEntryReference<AbilitySheet>[] equippedAbilities;
+        public DashAbilitySheet dashAbility;
         public Vector3 position;
     }
 

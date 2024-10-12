@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -55,7 +56,8 @@ namespace Gyvr.Mythril2D
             GameManager.InputSystem.gameplay.move.performed += OnMove;
             GameManager.InputSystem.gameplay.move.canceled += OnStoppedMoving;
             GameManager.InputSystem.gameplay.openGameMenu.performed += OnOpenGameMenu;
-            GameManager.InputSystem.gameplay.dash.performed += OnDash;
+            //GameManager.InputSystem.gameplay.dash.performed += OnDash;
+            GameManager.InputSystem.gameplay.dash.performed += OnDashAbility;
         }
 
         private void OnDestroy()
@@ -67,12 +69,8 @@ namespace Gyvr.Mythril2D
             GameManager.InputSystem.gameplay.move.performed -= OnMove;
             GameManager.InputSystem.gameplay.move.canceled -= OnStoppedMoving;
             GameManager.InputSystem.gameplay.openGameMenu.performed -= OnOpenGameMenu;
-            GameManager.InputSystem.gameplay.dash.performed -= OnDash;
-        }
-
-        protected AbilitySheet GetAbilityAtIndex(int index)
-        {
-            return GameManager.Player.equippedAbilities[index];
+            //GameManager.InputSystem.gameplay.dash.performed -= OnDash;
+            GameManager.InputSystem.gameplay.dash.performed -= OnDashAbility;
         }
 
         private void Update()
@@ -147,9 +145,9 @@ namespace Gyvr.Mythril2D
             m_character.SetMovementDirection(Vector2.zero);
         }
 
+        // 没有在角色中挂载Dash技能时 只能在这里执行方法
         private void OnDash(InputAction.CallbackContext context)
         {
-
             m_dirction =
                     m_character.IsMoving() ?
                     m_character.movementDirection :
@@ -165,6 +163,8 @@ namespace Gyvr.Mythril2D
             {
                 m_dashParticleSystem.Play();
             }
+
+            //m_character.DashConsumeStamina();
 
             m_character.TryPlayDashAnimation();
         }
@@ -183,6 +183,17 @@ namespace Gyvr.Mythril2D
         private void OnFireAbility1(InputAction.CallbackContext context) => FireAbilityAtIndex(0);
         private void OnFireAbility2(InputAction.CallbackContext context) => FireAbilityAtIndex(1);
         private void OnFireAbility3(InputAction.CallbackContext context) => FireAbilityAtIndex(2);
+        private void OnDashAbility(InputAction.CallbackContext context) => GetDashAbility();
+
+        private void GetDashAbility()
+        {
+            DashAbilitySheet selectedAbility = GameManager.Player.dashAbility;
+
+            if (selectedAbility != null)
+            {
+                m_character.FireAbility(selectedAbility);
+            }
+        }
 
         private void FireAbilityAtIndex(int i)
         {
@@ -192,6 +203,11 @@ namespace Gyvr.Mythril2D
             {
                 m_character.FireAbility(selectedAbility);
             }
+        }
+        
+        protected AbilitySheet GetAbilityAtIndex(int index)
+        {
+            return GameManager.Player.equippedAbilities[index];
         }
     }
 }

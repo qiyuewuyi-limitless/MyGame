@@ -19,16 +19,25 @@ namespace Gyvr.Mythril2D
             m_character.DisableActions(m_sheet.disabledActionsWhileCasting);
             Fire();
             ConsumeMana();
+            ConsumeStamina();
         }
 
         public virtual bool CanFire()
         {
-            return m_character.Can(EActionFlags.UseAbility) && m_character.currentStats[EStat.Mana] >= m_sheet.manaCost;
+            if(m_character.tag == "Player")
+                return m_character.Can(EActionFlags.UseAbility) && m_character.currentStats[EStat.Mana] >= m_sheet.manaCost && m_character.currentStats[EStat.Stamina] >= m_sheet.staminaCost;
+            else
+                return m_character.Can(EActionFlags.UseAbility) && m_character.currentStats[EStat.Mana] >= m_sheet.manaCost;
         }
 
         protected virtual void ConsumeMana()
         {
             m_character.ConsumeMana(m_sheet.manaCost);
+        }
+
+        protected virtual void ConsumeStamina()
+        {
+            m_character.ConsumeStamina(m_sheet.staminaCost);
         }
 
         protected void TerminateCasting()

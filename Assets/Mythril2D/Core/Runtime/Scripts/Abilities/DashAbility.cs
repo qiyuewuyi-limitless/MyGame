@@ -17,11 +17,13 @@ namespace Gyvr.Mythril2D
 
         public override bool CanFire()
         {
+            //Debug.Log("CanFire Dash");
             return base.CanFire() && !m_character.IsBeingPushed();
         }
 
         protected override void Fire()
         {
+            //Debug.Log("Fire Dash");
             m_dirction =
                 m_character.IsMoving() ?
                 m_character.movementDirection :
@@ -34,9 +36,10 @@ namespace Gyvr.Mythril2D
 
             m_character.TryPlayDashAnimation();
 
+            // 在主方法执行不需要在这里再扣一次
+            //ConsumeStamina();
+
             TerminateCasting();
         }
-
-
     }
 }

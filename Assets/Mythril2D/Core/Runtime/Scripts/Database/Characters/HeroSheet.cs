@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gyvr.Mythril2D
@@ -6,10 +7,16 @@ namespace Gyvr.Mythril2D
     public class HeroSheet : CharacterSheet
     {
         [Header("Hero")]
+        [SerializeField] private DashAbilitySheet m_dashAbilitySheet;
         public Stats baseStats;
         public int pointsPerLevel = 5;
         public LevelScaledInteger experience = new LevelScaledInteger();
 
         public HeroSheet() : base(EAlignment.Good) { }
+
+        public DashAbilitySheet GetDashAbility()
+        {
+            return m_dashAbilitySheet;
+        }
     }
 }

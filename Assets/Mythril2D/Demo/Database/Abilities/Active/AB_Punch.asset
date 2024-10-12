@@ -16,6 +16,7 @@ MonoBehaviour:
   m_displayName: Punch
   m_description: A basic attack, that is better than doing nothing
   m_prefab: {fileID: 758787801704857827, guid: 76f569ed198834552b32d5ba2da3617f, type: 3}
+  m_staminaCost: 5
   m_manaCost: 0
   m_abilityStateManagementMode: 0
   m_canInterupt: 1

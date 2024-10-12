@@ -6,6 +6,7 @@ namespace Gyvr.Mythril2D
     public struct GameplayActions
     {
         public InputAction move;
+        public InputAction run;
         public InputAction interact;
         public InputAction fireAbility1;
         public InputAction fireAbility2;
@@ -82,6 +83,7 @@ namespace Gyvr.Mythril2D
                 fireAbility2 = actions.FindAction("FireAbility2"),
                 fireAbility3 = actions.FindAction("FireAbility3"),
                 move = actions.FindAction("Move"),
+                run = actions.FindAction("Run"),
                 openGameMenu = actions.FindAction("OpenGameMenu"),
                 dash = actions.FindAction("Dash")
             };

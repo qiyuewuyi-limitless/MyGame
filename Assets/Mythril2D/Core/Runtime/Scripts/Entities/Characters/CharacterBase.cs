@@ -62,7 +62,9 @@ namespace Gyvr.Mythril2D
         [SerializeField] private AbilitySheet[] m_additionalAbilities = null;
 
         [Header("Movement Settings")]
-        [SerializeField] private float m_moveSpeed = 4.0f;
+        [SerializeField] private float m_nowMoveSpeed = 3.0f;
+        [SerializeField] private float m_moveSpeed = 3.0f;
+        [SerializeField] private float m_runSpeed = 5.0f;
         [SerializeField] private float m_pushIntensityScale = 1.0f;
         [SerializeField] private float m_pushResistanceScale = 1.0f;
         [SerializeField] private EMovementMode m_movementMode = EMovementMode.Bidirectional;
@@ -75,6 +77,7 @@ namespace Gyvr.Mythril2D
         [SerializeField] private string m_moveXAnimationParameter = "moveX";
         [SerializeField] private string m_moveYAnimationParameter = "moveY";
         [SerializeField] private string m_isMovingAnimationParameter = "isMoving";
+        [SerializeField] private string m_isRunningAnimationParameter = "isRunning";
         [SerializeField] private string m_dashAnimationParameter = "dash";
         [SerializeField] private string m_isLootedAnimationParameter = "isLooted";
 
@@ -107,6 +110,7 @@ namespace Gyvr.Mythril2D
         private bool m_hasInvincibleAnimation = false;
         private bool m_invincibleAnimationPlaying = false;
         private bool m_hasDashAnimation = false;
+        private bool m_hasRunningAnimation = false;
         private Dictionary<AbilitySheet, int> m_abilities = new Dictionary<AbilitySheet, int>();
         private Dictionary<AbilitySheet, AbilityBase> m_abilitiesInstances = new Dictionary<AbilitySheet, AbilityBase>();
         private HashSet<ITriggerableAbility> m_triggerableAbilities = new HashSet<ITriggerableAbility>();
@@ -143,7 +147,34 @@ namespace Gyvr.Mythril2D
             //int layermask = GameManager.Config.collisionContactFilter.layerMask;
             //layermask &= ~(1 << 6);
             //GameManager.Config.collisionContactFilter.layerMask = layermask;
+        }
 
+        protected virtual void Start()
+        {
+            if (m_deleteLayerMask == false)
+            {
+
+                // 为什么会穿过敌人？
+
+                // the default GameManager.Config.collisionContactFilter.layerMask is NULL
+                //LayerMask originalLayerMask = GameManager.Config.collisionContactFilter.layerMask; 
+                //originalLayerMask |= (1 << LayerMask.GetMask(GameManager.Config.interactionLayer));
+
+                //LayerMask originalLayerMask = (1 << 6);
+                //int layer = ~(1 << 0);
+                //layer &= ~(1 << 0);
+                //layer &= ~(1 << 6);
+                //layer &= ~(1 << 6);
+                //layer &= ~(1 << 9);
+                //layer &= ~(1 << 10);
+                //layer &= ~(1 << 11);
+                int layermask = GameManager.Config.collisionContactFilter.layerMask;
+                layermask &= ~(1 << 6);
+                GameManager.Config.collisionContactFilter.layerMask = layermask;
+                //Debug.Log("layerMask = " + layermask);
+                //Debug.Log("layerMask = " + GameManager.Config.collisionContactFilter.layerMask);
+                m_deleteLayerMask = true;
+            }
         }
 
         private void OnDestroy()
@@ -177,6 +208,7 @@ namespace Gyvr.Mythril2D
                 m_hasDeadAnimation = AnimationUtils.HasParameter(m_animator, m_deadAnimationParameter);
                 m_hasInvincibleAnimation = AnimationUtils.HasParameter(m_animator, m_invincibleAnimationParameter);
                 m_hasDashAnimation = AnimationUtils.HasParameter(m_animator, m_dashAnimationParameter);
+                m_hasRunningAnimation = AnimationUtils.HasParameter(m_animator, m_isRunningAnimationParameter);
             }
         }
 
@@ -372,11 +404,47 @@ namespace Gyvr.Mythril2D
             return false;
         }
 
+        public bool TryPlayRunAnimation()
+        {
+            if (m_animator && m_hasRunningAnimation)
+            {
+                m_nowMoveSpeed = m_runSpeed;
+                m_animator.SetBool(m_isRunningAnimationParameter, true);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool EndPlayRunAnimation()
+        {
+            // 如果不做判断，可能会报错误 MissingReferenceException while executing 'canceled' callbacks of 
+            // 可能是因为松开按键后 还执行了一段时间 但Run状态机已经转换为 false
+            if (m_animator && m_hasRunningAnimation)
+            {
+                m_nowMoveSpeed = m_moveSpeed;
+                m_animator.SetBool(m_isRunningAnimationParameter, false);
+                return true;
+            }
+            return false;
+        }
+
         public bool TryPlayDashAnimation()
         {
             if (m_animator && m_hasDashAnimation)
             {
                 m_animator.SetTrigger(m_dashAnimationParameter);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool TryPlayRunningAnimation()
+        {
+            if (m_animator && m_hasRunningAnimation)
+            {
+                m_animator.SetTrigger(m_isRunningAnimationParameter);
                 return true;
             }
 
@@ -490,11 +558,6 @@ namespace Gyvr.Mythril2D
             //Debug.Log("m_currentStats[EStat.Stamina] = " + m_currentStats[EStat.Stamina]);
         }
 
-        public void DashConsumeStamina()
-        {
-            
-        }
-
         public void EnableActions(EActionFlags actions)
         {
             m_actionFlags |= actions;
@@ -566,33 +629,13 @@ namespace Gyvr.Mythril2D
 
         #region Movement
         // TODO: Make prettier
+        private void Update()
+        {
+            
+        }
+
         private void FixedUpdate()
         {
-            if(m_deleteLayerMask == false)
-            {
-
-                // 为什么会穿过敌人？
-
-                // the default GameManager.Config.collisionContactFilter.layerMask is NULL
-                //LayerMask originalLayerMask = GameManager.Config.collisionContactFilter.layerMask; 
-                //originalLayerMask |= (1 << LayerMask.GetMask(GameManager.Config.interactionLayer));
-
-                //LayerMask originalLayerMask = (1 << 6);
-                //int layer = ~(1 << 0);
-                //layer &= ~(1 << 0);
-                //layer &= ~(1 << 6);
-                //layer &= ~(1 << 6);
-                //layer &= ~(1 << 9);
-                //layer &= ~(1 << 10);
-                //layer &= ~(1 << 11);
-                int layermask = GameManager.Config.collisionContactFilter.layerMask;
-                layermask &= ~(1 << 6);
-                GameManager.Config.collisionContactFilter.layerMask = layermask;
-                //Debug.Log("layerMask = " + layermask);
-                //Debug.Log("layerMask = " + GameManager.Config.collisionContactFilter.layerMask);
-                m_deleteLayerMask = true;
-            }
-
             if (m_pushed)
             {
                 if (m_pushIntensity > 0.2f)
@@ -613,16 +656,16 @@ namespace Gyvr.Mythril2D
                 // If movement input is not 0, try to move
                 if (m_movementDirection != Vector2.zero)
                 {
-                    bool success = TryMove(m_movementDirection, m_moveSpeed);
+                    bool success = TryMove(m_movementDirection, m_nowMoveSpeed);
 
                     if (!success)
                     {
-                        success = TryMove(new Vector2(m_movementDirection.x, 0), m_moveSpeed);
+                        success = TryMove(new Vector2(m_movementDirection.x, 0), m_nowMoveSpeed);
                     }
 
                     if (!success)
                     {
-                        TryMove(new Vector2(0, m_movementDirection.y), m_moveSpeed);
+                        TryMove(new Vector2(0, m_movementDirection.y), m_nowMoveSpeed);
                     }
                 }
                 SetLookAtDirection(m_movementDirection);
@@ -630,6 +673,7 @@ namespace Gyvr.Mythril2D
             }
 
             m_animator.SetBool(m_isMovingAnimationParameter, m_lastSuccessfullMoveDirection.magnitude > 0.0f);
+            //m_animator.SetBool(m_isRunningAnimationParameter, m_lastSuccessfullMoveDirection.magnitude > 0.0f);
 
             if (m_movementMode == EMovementMode.Polydirectional)
             {
@@ -648,6 +692,7 @@ namespace Gyvr.Mythril2D
         public bool IsMovingLeft() => m_movementDirection.x < 0.0f || (m_pushed && m_pushDirection.x < 0.0f);
         public bool IsMovingRight() => m_movementDirection.x > 0.0f || (m_pushed && m_pushDirection.x > 0.0f);
         public bool IsMoving() => m_movementDirection.magnitude > 0.0f || (m_pushed && m_pushDirection.magnitude > 0.0f);
+        //public bool IsRunning() => m_isRunningAnimationParameter;
 
         public void SetLookAtDirection(Transform target)
         {

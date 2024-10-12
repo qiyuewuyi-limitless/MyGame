@@ -55,8 +55,9 @@ namespace Gyvr.Mythril2D
             GameManager.InputSystem.gameplay.fireAbility3.performed += OnFireAbility3;
             GameManager.InputSystem.gameplay.move.performed += OnMove;
             GameManager.InputSystem.gameplay.move.canceled += OnStoppedMoving;
+            GameManager.InputSystem.gameplay.run.performed += OnRun;
+            GameManager.InputSystem.gameplay.run.canceled += OnStoppedRunning;
             GameManager.InputSystem.gameplay.openGameMenu.performed += OnOpenGameMenu;
-            //GameManager.InputSystem.gameplay.dash.performed += OnDash;
             GameManager.InputSystem.gameplay.dash.performed += OnDashAbility;
         }
 
@@ -68,8 +69,9 @@ namespace Gyvr.Mythril2D
             GameManager.InputSystem.gameplay.fireAbility3.performed -= OnFireAbility3;
             GameManager.InputSystem.gameplay.move.performed -= OnMove;
             GameManager.InputSystem.gameplay.move.canceled -= OnStoppedMoving;
+            GameManager.InputSystem.gameplay.run.performed -= OnRun;
+            GameManager.InputSystem.gameplay.run.canceled += OnStoppedRunning;
             GameManager.InputSystem.gameplay.openGameMenu.performed -= OnOpenGameMenu;
-            //GameManager.InputSystem.gameplay.dash.performed -= OnDash;
             GameManager.InputSystem.gameplay.dash.performed -= OnDashAbility;
         }
 
@@ -143,6 +145,22 @@ namespace Gyvr.Mythril2D
         private void OnStoppedMoving(InputAction.CallbackContext context)
         {
             m_character.SetMovementDirection(Vector2.zero);
+        }
+
+        private void OnRun(InputAction.CallbackContext context)
+        {
+            if (context.performed == true)
+            {
+                m_character.TryPlayRunAnimation();
+            }
+        }
+
+        private void OnStoppedRunning(InputAction.CallbackContext context)
+        {
+            if (context.performed == false)
+            {
+                m_character.EndPlayRunAnimation();
+            }
         }
 
         // 没有在角色中挂载Dash技能时 只能在这里执行方法

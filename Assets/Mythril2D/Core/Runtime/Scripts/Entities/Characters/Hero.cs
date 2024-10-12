@@ -37,9 +37,9 @@ namespace Gyvr.Mythril2D
         private AbilitySheet[] m_equippedAbilities = new AbilitySheet[MaxEquipedAbilityCount];
 
         // 这里用的话，得在人物sheet下面导入对应的 abilitysheet
-        private DashAbilitySheet m_dashAbility = null;
         //ScriptableObject.ctor is not allowed to be called from a MonoBehaviour constructor (or instance field initializer), call it in Awake or Start instead. 
         //private DashAbilitySheet m_dashAbility = ScriptableObject.CreateInstance<DashAbilitySheet>();
+        private DashAbilitySheet m_dashAbility = null;
 
         private UnityEvent<AbilitySheet[]> m_equippedAbilitiesChanged = new UnityEvent<AbilitySheet[]>();
 

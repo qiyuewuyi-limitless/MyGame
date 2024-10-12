@@ -114,82 +114,82 @@ namespace Gyvr.Mythril2D
             return toUnequip;
         }
 
-        public void AddBonusAbility(AbilitySheet ability)
+        public void AddBonusAbility(AbilitySheet abilitySheet)
         {
-            if (!m_bonusAbilities.Contains(ability))
+            if (!m_bonusAbilities.Contains(abilitySheet))
             {
-                m_bonusAbilities.Add(ability);
-                AddAbility(ability);
+                m_bonusAbilities.Add(abilitySheet);
+                AddAbility(abilitySheet);
             }
         }
 
-        public void RemoveBonusAbility(AbilitySheet ability)
+        public void RemoveBonusAbility(AbilitySheet abilitySheet)
         {
-            if (!m_bonusAbilities.Contains(ability))
+            if (!m_bonusAbilities.Contains(abilitySheet))
             {
                 Debug.LogAssertion("Cannot remove an ability that hasn't been added in the first place.");
             }
             else
             {
-                m_bonusAbilities.Remove(ability);
-                RemoveAbility(ability);
+                m_bonusAbilities.Remove(abilitySheet);
+                RemoveAbility(abilitySheet);
             }
         }
 
-        private bool AddDashAbility(DashAbilitySheet ability)
+        private bool AddDashAbility(DashAbilitySheet abilitySheet)
         {
-            if (base.AddAbility(ability))
+            if (base.AddAbility(abilitySheet))
             {
-                if (!IsAbilityEquiped(ability))
+                if (!IsAbilityEquiped(abilitySheet))
                 {
                     for (int i = 0; i < m_equippedAbilities.Length; ++i)
                     {
-                        m_dashAbility = ability;
+                        m_dashAbility = abilitySheet;
                     }
                 }
 
-                GameManager.NotificationSystem.abilityAdded.Invoke(ability);
+                GameManager.NotificationSystem.abilityAdded.Invoke(abilitySheet);
                 return true;
             }
 
             return false;
         }
 
-        protected override bool AddAbility(AbilitySheet ability)
+        protected override bool AddAbility(AbilitySheet abilitySheet)
         {
-            if (base.AddAbility(ability))
+            if (base.AddAbility(abilitySheet))
             {
-                if (!IsAbilityEquiped(ability))
+                if (!IsAbilityEquiped(abilitySheet))
                 {
                     for (int i = 0; i < m_equippedAbilities.Length; ++i)
                     {
                         if (m_equippedAbilities[i] == null)
                         {
-                            Equip(ability, i);
+                            Equip(abilitySheet, i);
                         }
                     }
                 }
 
-                GameManager.NotificationSystem.abilityAdded.Invoke(ability);
+                GameManager.NotificationSystem.abilityAdded.Invoke(abilitySheet);
                 return true;
             }
 
             return false;
         }
 
-        protected override bool RemoveAbility(AbilitySheet ability)
+        protected override bool RemoveAbility(AbilitySheet abilitySheet)
         {
-            if (base.RemoveAbility(ability))
+            if (base.RemoveAbility(abilitySheet))
             {
                 for (int i = 0; i < m_equippedAbilities.Length; ++i)
                 {
-                    if (m_equippedAbilities[i] == ability)
+                    if (m_equippedAbilities[i] == abilitySheet)
                     {
                         Unequip(i);
                     }
                 }
 
-                GameManager.NotificationSystem.abilityRemoved.Invoke(ability);
+                GameManager.NotificationSystem.abilityRemoved.Invoke(abilitySheet);
                 return true;
             }
 

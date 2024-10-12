@@ -67,7 +67,8 @@ namespace Gyvr.Mythril2D
         [Header("Gameplay Settings")]
         public CraftingStation onTheGoCraftingStation = null;
         public bool canCriticalHit = true;
-        public bool canMissHit = true;
+        //public bool canMissHit = true;
+        public bool canMissHit = false;
 
         [Header("Game Terms")]
         [SerializeField] private SerializableDictionary<string, TermDefinition> m_gameTerms = new SerializableDictionary<string, TermDefinition>();

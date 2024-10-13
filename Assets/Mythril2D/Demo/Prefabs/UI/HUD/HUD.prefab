@@ -870,6 +870,14 @@ PrefabInstance:
       propertyPath: m_stat
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7540909127647356692, guid: 0ca54e8f17e0a437dad6d051f13e91b6, type: 3}
+      propertyPath: useStamina
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7540909127647356692, guid: 0ca54e8f17e0a437dad6d051f13e91b6, type: 3}
+      propertyPath: m_heroSheet
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f100cbe75844944299cc4909cad12e0, type: 2}
     - target: {fileID: 7540909127647356698, guid: 0ca54e8f17e0a437dad6d051f13e91b6, type: 3}
       propertyPath: m_Name
       value: Stamina Bar

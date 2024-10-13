@@ -26,6 +26,8 @@ namespace Gyvr.Mythril2D
         public const int StatCount = 9;
 
         [SerializeField] private int[] m_values = new int[StatCount] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        // 为什么这样写在编辑器看不到
+        //[SerializeField] private float Stamina = 0f;
 
         public Stats() : this(new int[StatCount] { 0, 0, 0, 0, 0, 0, 0, 0, 0 })
         {

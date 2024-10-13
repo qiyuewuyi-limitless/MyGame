@@ -1,5 +1,6 @@
 using Codice.CM.Common;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor.Playables;
@@ -95,9 +96,9 @@ namespace Gyvr.Mythril2D
         public int level => m_level;
         public bool invincible => characterSheet.alignment == EAlignment.Neutral || m_invincibleAnimationPlaying || dead;
         public Stats currentStats => m_currentStats.stats;
-        public Stats stats => m_stats.stats;
+        public Stats stats => m_maxStats.stats;
         public UnityEvent<Stats> currentStatsChanged => m_currentStats.changed;
-        public UnityEvent<Stats> statsChanged => m_stats.changed;
+        public UnityEvent<Stats> maxStatsChanged => m_maxStats.changed;
         public UnityEvent destroyed => m_destroyed;
         public EActionFlags actionFlags => m_actionFlags;
         public Vector2 movementDirection => m_movementDirection;
@@ -115,7 +116,7 @@ namespace Gyvr.Mythril2D
         private Dictionary<AbilitySheet, AbilityBase> m_abilitiesInstances = new Dictionary<AbilitySheet, AbilityBase>();
         private HashSet<ITriggerableAbility> m_triggerableAbilities = new HashSet<ITriggerableAbility>();
         protected ObservableStats m_currentStats = new ObservableStats();
-        protected ObservableStats m_stats = new ObservableStats();
+        protected ObservableStats m_maxStats = new ObservableStats();
         private UnityEvent m_destroyed = new UnityEvent();
 
         private bool m_deleteLayerMask = false;
@@ -137,7 +138,7 @@ namespace Gyvr.Mythril2D
             Debug.Assert(m_spriteRenderer, ErrorMessages.InspectorMissingComponentReference<SpriteRenderer>());
             Debug.Assert(m_rigidbody, ErrorMessages.InspectorMissingComponentReference<Rigidbody2D>());
 
-            m_stats.changed.AddListener(OnStatsChanged);
+            m_maxStats.changed.AddListener(OnMaxStatsChanged);
             m_currentStats.changed.AddListener(OnCurrentStatsChanged);
 
             CheckForAnimations();
@@ -159,9 +160,9 @@ namespace Gyvr.Mythril2D
             m_destroyed.Invoke();
         }
 
-        private void OnStatsChanged(Stats previous)
+        private void OnMaxStatsChanged(Stats previous)
         {
-            Stats difference = m_stats.stats - previous;
+            Stats difference = m_maxStats.stats - previous;
             Stats newCurrentStats = m_currentStats.stats + difference;
             // Make sure we don't kill the character when updating its maximum stats
             newCurrentStats[EStat.Health] = math.max(newCurrentStats[EStat.Health], 1);
@@ -387,6 +388,7 @@ namespace Gyvr.Mythril2D
             {
                 m_nowMoveSpeed = m_runSpeed;
                 m_animator.SetBool(m_isRunningAnimationParameter, true);
+                GameManager.Player.isExecutingAction = true;
                 return true;
             }
 
@@ -401,6 +403,7 @@ namespace Gyvr.Mythril2D
             {
                 m_nowMoveSpeed = m_moveSpeed;
                 m_animator.SetBool(m_isRunningAnimationParameter, false);
+                GameManager.Player.isExecutingAction = false; 
                 return true;
             }
             return false;
@@ -408,20 +411,10 @@ namespace Gyvr.Mythril2D
 
         public bool TryPlayDashAnimation()
         {
-            if (m_animator && m_hasDashAnimation)
+            if (GameManager.Player.isNowCanRun && m_animator && m_hasDashAnimation)
             {
+
                 m_animator.SetTrigger(m_dashAnimationParameter);
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool TryPlayRunningAnimation()
-        {
-            if (m_animator && m_hasRunningAnimation)
-            {
-                m_animator.SetTrigger(m_isRunningAnimationParameter);
                 return true;
             }
 
@@ -508,7 +501,7 @@ namespace Gyvr.Mythril2D
         {
             if (!dead)
             {
-                int missingHealth = m_stats[EStat.Health] - m_currentStats[EStat.Health];
+                int missingHealth = m_maxStats[EStat.Health] - m_currentStats[EStat.Health];
                 m_currentStats[EStat.Health] += math.min(value, missingHealth);
                 GameManager.NotificationSystem.healthRecovered.Invoke(this, value);
             }
@@ -516,7 +509,7 @@ namespace Gyvr.Mythril2D
 
         public void RecoverMana(int value)
         {
-            int missingMana = m_stats[EStat.Mana] - m_currentStats[EStat.Mana];
+            int missingMana = m_maxStats[EStat.Mana] - m_currentStats[EStat.Mana];
             m_currentStats[EStat.Mana] += math.min(value, missingMana);
             GameManager.NotificationSystem.manaRecovered.Invoke(this, value);
         }
@@ -527,13 +520,20 @@ namespace Gyvr.Mythril2D
             GameManager.NotificationSystem.manaConsumed.Invoke(this, value);
         }
 
-        public void ConsumeStamina(int value)
-        {
-            m_currentStats[EStat.Stamina] -= math.min(value, m_currentStats[EStat.Stamina]);
-            GameManager.NotificationSystem.manaConsumed.Invoke(this, value);
+        //public void RecoverStamina(int value)
+        //{
+        //    int missingStamina = m_maxStats[EStat.Stamina] - m_currentStats[EStat.Stamina];
+        //    m_currentStats[EStat.Stamina] += math.min(value, missingStamina);
+        //    GameManager.NotificationSystem.manaRecovered.Invoke(this, value);
+        //}
 
-            //Debug.Log("m_currentStats[EStat.Stamina] = " + m_currentStats[EStat.Stamina]);
-        }
+        //public void consumStamina(int value)
+        //{
+        //    m_currentStats[EStat.Stamina] -= math.min(value, m_currentStats[EStat.Stamina]);
+        //    GameManager.NotificationSystem.manaConsumed.Invoke(this, value);
+
+        //    //Debug.Log("m_currentStats[EStat.Stamina] = " + m_currentStats[EStat.Stamina]);
+        //}
 
         public void EnableActions(EActionFlags actions)
         {
@@ -783,7 +783,7 @@ namespace Gyvr.Mythril2D
             //}
 
             //count = math.max(0, count-colliders.Length);
-            Debug.Log("count = " + count);
+            //Debug.Log("count = " + count);
 
             //if (count == 0 && isAllColliderInteracted == true)
             // 使用移动对象位置和设置可以穿过碰撞体都不太合理，会产生太多需要额外判断的条件

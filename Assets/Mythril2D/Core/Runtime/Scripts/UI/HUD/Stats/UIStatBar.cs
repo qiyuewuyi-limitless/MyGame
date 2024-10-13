@@ -13,6 +13,7 @@ namespace Gyvr.Mythril2D
         [SerializeField] private TextMeshProUGUI m_sliderText = null;
 
         [Header("General Settings")]
+        [SerializeField] private bool useStamina = false;
         [SerializeField] private EStat m_stat;
 
         [Header("Visual Settings")]
@@ -21,7 +22,8 @@ namespace Gyvr.Mythril2D
         [SerializeField] private float2 m_shakeFrequency = new float2(30.0f, 25.0f);
         [SerializeField] private float m_shakeDuration = 0.2f;
 
-        private CharacterBase m_target = null;
+        //private CharacterBase m_target = null;
+        private Hero m_target = null;
 
         // Hack-ish way to make sure we don't start shaking before the UI is fully initialized,
         // which usually take one frame because of Unity's layout system
@@ -33,11 +35,21 @@ namespace Gyvr.Mythril2D
         {
             m_target = GameManager.Player;
 
-            m_target.statsChanged.AddListener(OnStatsChanged);
+            // 如果我这样写 target 却是 CharacterBase 会不会怪物的 UI Bar 更新的时候就会报错
+            // 不对啊 这获取的不是 player 吗那么应该只对应玩家吧
+            m_target.maxStatsChanged.AddListener(OnStatsChanged);
             m_target.currentStatsChanged.AddListener(OnStatsChanged);
+            m_target.maxStaminaChanged.AddListener(OnStaminaChanged);
+            m_target.currentStaminaChanged.AddListener(OnStaminaChanged);
 
             m_elapsedFrames = 0;
 
+            UpdateUI();
+        }
+
+        // 原来没有接受 float 参数的方法 所以 invoke 调用的时候并没有对应的方法来接受参数来监听对象
+        private void OnStaminaChanged(float previousStamina)
+        {
             UpdateUI();
         }
 
@@ -58,8 +70,18 @@ namespace Gyvr.Mythril2D
         {
             m_label.text = GameManager.Config.GetTermDefinition(m_stat).shortName;
 
-            int current = m_target.currentStats[m_stat];
-            int max = m_target.stats[m_stat];
+            float current, max; current = max = 0;
+
+            if (useStamina && m_stat == EStat.Stamina)
+            {
+                current = GameManager.Player.GetStamina();
+                max = GameManager.Player.maxStamina;
+            }
+            else
+            {
+                current = m_target.currentStats[m_stat];
+                max = m_target.stats[m_stat];
+            }
 
             float previousSliderValue = m_slider.value;
 

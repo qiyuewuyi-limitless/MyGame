@@ -1,6 +1,11 @@
+using Codice.CM.Client.Differences;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
 using UnityEngine.Events;
+using UnityEngine.SocialPlatforms.Impl;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 namespace Gyvr.Mythril2D
 {
@@ -12,6 +17,31 @@ namespace Gyvr.Mythril2D
         [Header("Hero")]
         [SerializeField] private bool m_restoreHealthOnLevelUp = true;
         [SerializeField] private bool m_restoreManaOnLevelUp = true;
+
+        [Header("Stamina Paramenters")]
+        // 每秒消耗多少耐力
+        [SerializeField] private float staminaMultiplier = 10;
+        // 耐力回复前，等待时间
+        [SerializeField] private float timeBeforeStaminaRengeStarts = 1.5f;
+        // 每次单位耐力回复量
+        [SerializeField] private float staminaValueIncrement = 2;
+        // 单位耐力回复间隔时间
+        [SerializeField] private float staminaTimeIncrement = 0.1f;
+        // 当前耐力
+        public float currentStamina => m_currentStats.Stamina;
+        public float maxStamina => m_sheet.GetMaxStamina();
+
+        public bool isNowCanRun = false;
+        public bool isExecutingAction = false;
+        private bool useStamina = true;
+        private Coroutine regeneratingStamina;
+        
+        public UnityEvent<float> currentStaminaChanged => m_currentStats.staminaChanged;
+        public UnityEvent<float> maxStaminaChanged => m_maxStats.staminaChanged;
+
+        //protected ObservableStats m_currentStamina = new ObservableStats(0f);
+        //protected ObservableStats m_maxStamina = new ObservableStats(0f);
+
 
         public int experience => m_experience;
         public int nextLevelExperience => GetTotalExpRequirement(m_level + 1);
@@ -51,7 +81,7 @@ namespace Gyvr.Mythril2D
             {
                 total += m_sheet.experience[i];
             }
-
+            
             return total;
         }
 
@@ -80,15 +110,118 @@ namespace Gyvr.Mythril2D
             m_usedPoints += points;
         }
 
+        // 没继承父类会出事 无法获得对象
+        //private new void Awake()
+        //{
+        //}
+        private new void Awake()
+        {
+            base.Awake();
+            //m_currentStats.changed.AddListener(HandleStamina);
+        }
+
         private void Start()
         {
             UpdateStats();
         }
 
-        private void ApplyMissingCurrentStats()
+        private void Update()
         {
-            m_currentStats.Set(m_currentStats.stats - m_missingCurrentStats);
-            m_missingCurrentStats.Reset();
+            //Debug.Log("consumStamina = " + m_currentStats.Stamina);
+            if (useStamina) HandleStamina();
+        }
+
+        public float GetMaxStamina()
+        {
+            return maxStamina;
+        }
+
+        public float GetStamina()
+        {
+            return m_currentStats.Stamina;
+        }
+
+        public void RecoverStamina(int value)
+        {
+            float missingStamina = maxStamina - m_currentStats.Stamina;
+            //m_sheet.SetStamina(GetStamina() + math.min(value, missingStamina));
+            m_currentStats.Stamina += math.min(value, missingStamina);
+            GameManager.NotificationSystem.manaRecovered.Invoke(this, value);
+        }
+
+        public void ConsumeStamina(int value)
+        {
+            //m_sheet.SetStamina(m_currentStats.Stamina - math.min(value, m_currentStats.Stamina));
+            m_currentStats.Stamina -= math.min(value, m_currentStats.Stamina);
+            GameManager.NotificationSystem.manaConsumed.Invoke(this, value);
+
+            Debug.Log("m_currentStats[EStat.Stamina] = " + m_currentStats[EStat.Stamina]);
+        }
+
+        private void HandleStamina()
+        {
+
+            // 冲刺状态，且有移动输入，处理耐力
+            if (isExecutingAction == true && movementDirection != Vector2.zero)
+            {
+                // 如果耐力回复协程开启，中断
+                if (regeneratingStamina != null)
+                {
+                    StopCoroutine(regeneratingStamina);
+                    regeneratingStamina = null;
+                }
+
+                //staminaTimer += Time.deltaTime;
+                //seconds = staminaTimer % 60;
+                //if(seconds > 1)
+                //{
+                //    float consumStamina = staminaMultiplier * seconds;
+                //    Debug.Log("consumStamina = " + consumStamina);
+                //    ConsumeStamina((int)consumStamina);
+                //    seconds -= 1;
+                //}
+                //staminaTimer += Time.deltaTime;
+                //StartCoroutine(TimerRoutine());
+
+                m_currentStats.Stamina -= staminaMultiplier * Time.deltaTime;
+                //m_currentStats[EStat.Stamina] -= staminaMultiplier * Time.deltaTime;
+
+                if (m_currentStats.Stamina < 0) m_currentStats.Stamina = 0;
+
+                // 耐力值归零，禁止使用冲刺
+                if (m_currentStats.Stamina <= 0)
+                {
+                    isNowCanRun = false;
+                    EndPlayRunAnimation();
+                }
+            }
+            // 耐力值不满，且没有冲刺，且耐力回复未开启
+            if (m_currentStats.Stamina < maxStamina && isExecutingAction == false && regeneratingStamina == null)
+            {
+                regeneratingStamina = StartCoroutine(RegenerateStamina());
+            }
+
+        }
+
+        private IEnumerator RegenerateStamina()
+        {
+            yield return new WaitForSeconds(timeBeforeStaminaRengeStarts);
+
+            WaitForSeconds timeToWait = new WaitForSeconds(staminaTimeIncrement);
+            while (m_currentStats.Stamina < maxStamina)
+            {
+                // 大于0，可以使用冲刺
+                if (m_currentStats.Stamina > 0f) isNowCanRun = true;
+
+                RecoverStamina((int)(staminaValueIncrement));
+
+                if (m_currentStats.Stamina > maxStamina)
+                    m_currentStats.Stamina = maxStamina;
+
+                yield return timeToWait;
+            }
+            // 耐力回复完毕，引用置空
+            regeneratingStamina = null;
         }
 
         public Equipment Equip(Equipment equipment)
@@ -238,9 +371,15 @@ namespace Gyvr.Mythril2D
             Stats equipmentStats = CalculateEquipmentStats();
             Stats totalStats = m_sheet.baseStats + m_customStats + equipmentStats;
 
-            m_stats.Set(totalStats);
+            m_maxStats.Set(totalStats);
 
             ApplyMissingCurrentStats();
+        }
+
+        private void ApplyMissingCurrentStats()
+        {
+            m_currentStats.Set(m_currentStats.stats - m_missingCurrentStats);
+            m_missingCurrentStats.Reset();
         }
 
         private void OnLevelUp(bool silentMode = false)
@@ -251,12 +390,12 @@ namespace Gyvr.Mythril2D
             {
                 if (m_restoreHealthOnLevelUp)
                 {
-                    Heal(m_stats[EStat.Health] - m_currentStats[EStat.Health]);
+                    Heal(m_maxStats[EStat.Health] - m_currentStats[EStat.Health]);
                 }
 
                 if (m_restoreManaOnLevelUp)
                 {
-                    RecoverMana(m_stats[EStat.Mana] - m_currentStats[EStat.Mana]);
+                    RecoverMana(m_maxStats[EStat.Mana] - m_currentStats[EStat.Mana]);
                 }
 
                 GameManager.NotificationSystem.levelUp.Invoke(m_level);

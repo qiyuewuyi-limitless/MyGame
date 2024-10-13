@@ -12,7 +12,7 @@ namespace Gyvr.Mythril2D
 
         private void Awake()
         {
-            m_monster.statsChanged.AddListener(OnStatsChanged);
+            m_monster.maxStatsChanged.AddListener(OnStatsChanged);
             m_monster.currentStatsChanged.AddListener(OnStatsChanged);
             Refresh();
         }

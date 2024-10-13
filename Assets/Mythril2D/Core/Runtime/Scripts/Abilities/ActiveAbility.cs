@@ -25,7 +25,8 @@ namespace Gyvr.Mythril2D
         public virtual bool CanFire()
         {
             if(m_character.tag == "Player")
-                return m_character.Can(EActionFlags.UseAbility) && m_character.currentStats[EStat.Mana] >= m_sheet.manaCost && m_character.currentStats[EStat.Stamina] >= m_sheet.staminaCost;
+                //return m_character.Can(EActionFlags.UseAbility) && m_character.currentStats[EStat.Mana] >= m_sheet.manaCost && m_character.currentStats[EStat.Stamina] >= m_sheet.staminaCost;
+                return m_character.Can(EActionFlags.UseAbility) && m_character.currentStats[EStat.Mana] >= m_sheet.manaCost && GameManager.Player.GetStamina() >= m_sheet.staminaCost;
             else
                 return m_character.Can(EActionFlags.UseAbility) && m_character.currentStats[EStat.Mana] >= m_sheet.manaCost;
         }
@@ -37,7 +38,11 @@ namespace Gyvr.Mythril2D
 
         protected virtual void ConsumeStamina()
         {
-            m_character.ConsumeStamina(m_sheet.staminaCost);
+            if (m_character.tag == "Player")
+            {
+                GameManager.Player.ConsumeStamina(m_sheet.staminaCost);
+                //GameManager.PlayerSystem.PlayerInstance.ConsumeStamina(m_sheet.staminaCost);
+            }
         }
 
         protected void TerminateCasting()

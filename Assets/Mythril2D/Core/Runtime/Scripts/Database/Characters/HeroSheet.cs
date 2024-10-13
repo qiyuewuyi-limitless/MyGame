@@ -8,6 +8,8 @@ namespace Gyvr.Mythril2D
     {
         [Header("Hero")]
         [SerializeField] private DashAbilitySheet m_dashAbilitySheet;
+        [SerializeField] private float maxStamina = 0f;
+
         public Stats baseStats;
         public int pointsPerLevel = 5;
         public LevelScaledInteger experience = new LevelScaledInteger();
@@ -18,5 +20,11 @@ namespace Gyvr.Mythril2D
         {
             return m_dashAbilitySheet;
         }
+
+        public float GetMaxStamina()
+        {
+            return maxStamina;
+        }
+
     }
 }

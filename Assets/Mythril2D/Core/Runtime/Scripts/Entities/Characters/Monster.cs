@@ -38,7 +38,7 @@ namespace Gyvr.Mythril2D
 
         public void UpdateStats()
         {
-            m_stats.Set(m_sheet.stats[m_level]);
+            m_maxStats.Set(m_sheet.stats[m_level]);
         }
 
         protected override void Die()
@@ -119,7 +119,7 @@ namespace Gyvr.Mythril2D
             {
                 Debug.Log("Monster Interaction");
                 Debug.Log("GameManager.Config.collisionContactFilter = " + GameManager.Config.collisionContactFilter);
-                GameManager.PlayerSystem.PlayerInstance.GetComponent<PlayerController>().m_interactionTarget = this.gameObject;
+                GameManager.Player.GetComponent<PlayerController>().m_interactionTarget = this.gameObject;
                 //GameManager.PlayerSystem.PlayerInstance.GetComponent<PlayerController>().GetInteractibleObject();
             }
         }
@@ -129,7 +129,7 @@ namespace Gyvr.Mythril2D
         {
             if (String.Equals(other.gameObject.tag, "Player") == true)
             {
-                GameManager.PlayerSystem.PlayerInstance.GetComponent<PlayerController>().m_interactionTarget = null;
+                GameManager.Player.GetComponent<PlayerController>().m_interactionTarget = null;
             }
         }
 

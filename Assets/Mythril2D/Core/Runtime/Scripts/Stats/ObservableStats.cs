@@ -49,6 +49,7 @@ namespace Gyvr.Mythril2D
                 //    //Debug.Log("m_stamina set" + previousStamina); //active per frame
                 //}
 
+                // value 是传入的新值
                 float previousStamina = m_stamina;
                 m_stamina = value;
                 m_staminaChanged.Invoke(previousStamina); // 触发事件，传递旧的 stamina 值

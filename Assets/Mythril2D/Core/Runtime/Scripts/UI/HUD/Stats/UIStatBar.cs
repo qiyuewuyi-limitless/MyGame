@@ -89,6 +89,10 @@ namespace Gyvr.Mythril2D
 
             m_slider.minValue = 0;
             m_slider.maxValue = max;
+
+            // 取个整数 避免精力值有小数点
+            current = math.floor(current);
+
             m_slider.value = current;
 
             if (m_slider.value < previousSliderValue && CanShake() && m_shakeOnDecrease)

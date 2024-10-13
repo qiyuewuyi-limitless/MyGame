@@ -35,12 +35,8 @@ namespace Gyvr.Mythril2D
         public bool isExecutingAction = false;
         private bool useStamina = true;
         private Coroutine regeneratingStamina;
-        
         public UnityEvent<float> currentStaminaChanged => m_currentStats.staminaChanged;
         public UnityEvent<float> maxStaminaChanged => m_maxStats.staminaChanged;
-
-        //protected ObservableStats m_currentStamina = new ObservableStats(0f);
-        //protected ObservableStats m_maxStamina = new ObservableStats(0f);
 
 
         public int experience => m_experience;
@@ -113,9 +109,7 @@ namespace Gyvr.Mythril2D
         }
 
         // 没继承父类会出事 无法获得对象
-        //private new void Awake()
-        //{
-        //}
+        // private new void Awake(){}
         private new void Awake()
         {
             m_maxStats.staminaChanged.AddListener(OnStaminaChanged);
@@ -132,25 +126,17 @@ namespace Gyvr.Mythril2D
 
         private void Update()
         {
-            //Debug.Log("consumStamina = " + m_currentStats.Stamina);
+             //Debug.Log("consumStamina = " + m_currentStats.Stamina);
             if (useStamina) HandleStamina();
         }
 
         private void OnStaminaChanged(float previous)
         {
-            //Debug.Log("m_maxStats.stamina" + m_maxStats.stamina);
-            //Debug.Log("m_currentStats.stamina" + m_currentStats.stamina);
-            //Debug.Log("maxStamina" + maxStamina);
-            //Debug.Log("previous" + previous);
-
             float difference = m_maxStats.stamina - previous;
             float newCurrentStamina = m_currentStats.stamina + difference;
             // Make sure we don't kill the character when updating its maximum stats
             newCurrentStamina = math.max(newCurrentStamina, 1);
             m_currentStats.Set(newCurrentStamina);
-
-            //Debug.Log("newCurrentStamina" + newCurrentStamina);
-            //Debug.Log("m_currentStats.stamina" + m_currentStats.stamina);
         }
 
         public float GetMaxStamina()
@@ -168,14 +154,14 @@ namespace Gyvr.Mythril2D
             float missingStamina = maxStamina - m_currentStats.Stamina;
             //m_sheet.SetStamina(GetStamina() + math.min(value, missingStamina));
             m_currentStats.Stamina += math.min(value, missingStamina);
-            GameManager.NotificationSystem.manaRecovered.Invoke(this, value);
+            GameManager.NotificationSystem.staminaRecovered.Invoke(this, value);
         }
 
         public void ConsumeStamina(int value)
         {
             //m_sheet.SetStamina(m_currentStats.Stamina - math.min(value, m_currentStats.Stamina));
             m_currentStats.Stamina -= math.min(value, m_currentStats.Stamina);
-            GameManager.NotificationSystem.manaConsumed.Invoke(this, value);
+            GameManager.NotificationSystem.staminaConsumed.Invoke(this, value);
 
         }
 

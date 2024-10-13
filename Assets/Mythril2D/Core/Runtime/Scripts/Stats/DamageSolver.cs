@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Gyvr.Mythril2D
 {
@@ -109,8 +111,11 @@ namespace Gyvr.Mythril2D
                     EvaluateMiss(attacker.stats[EStat.Agility], defender.stats[EStat.Agility]) :
                     false;
 
+                if (missed) UnityEngine.Debug.Log("Damage missed");
+
                 return new DamageInputDescriptor
                 {
+                    
                     attacker = output.attacker,
                     damage = missed ? CalculateMissDamage(damage) : damage,
                     flags = missed ? output.flags | EDamageFlag.Miss : output.flags

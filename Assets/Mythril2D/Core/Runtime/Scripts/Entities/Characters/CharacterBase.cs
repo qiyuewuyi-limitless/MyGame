@@ -138,7 +138,7 @@ namespace Gyvr.Mythril2D
             Debug.Assert(m_spriteRenderer, ErrorMessages.InspectorMissingComponentReference<SpriteRenderer>());
             Debug.Assert(m_rigidbody, ErrorMessages.InspectorMissingComponentReference<Rigidbody2D>());
 
-            m_maxStats.changed.AddListener(OnMaxStatsChanged);
+            m_maxStats.changed.AddListener(OnStatsChanged);
             m_currentStats.changed.AddListener(OnCurrentStatsChanged);
 
             CheckForAnimations();
@@ -160,13 +160,18 @@ namespace Gyvr.Mythril2D
             m_destroyed.Invoke();
         }
 
-        private void OnMaxStatsChanged(Stats previous)
+        private void OnStatsChanged(Stats previous)
         {
+            // 似乎是在这里初始化属性和生命值
+            //Debug.Log("OnStatsChanged m_currentStats" + m_currentStats.stats[EStat.Health]);
+
             Stats difference = m_maxStats.stats - previous;
             Stats newCurrentStats = m_currentStats.stats + difference;
             // Make sure we don't kill the character when updating its maximum stats
             newCurrentStats[EStat.Health] = math.max(newCurrentStats[EStat.Health], 1);
             m_currentStats.Set(newCurrentStats);
+
+            //Debug.Log("OnStatsChanged m_currentStats" + m_currentStats.stats[EStat.Health]);
         }
 
         private void OnCurrentStatsChanged(Stats previous)

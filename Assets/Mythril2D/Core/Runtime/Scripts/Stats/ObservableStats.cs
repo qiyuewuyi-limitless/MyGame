@@ -41,13 +41,17 @@ namespace Gyvr.Mythril2D
             set
             {
                 // 如果值有变化，则触发事件
-                if (Mathf.Abs(m_stamina - value) > Mathf.Epsilon)
-                {
-                    float previousStamina = m_stamina;
-                    m_stamina = value;
-                    m_staminaChanged.Invoke(previousStamina); // 触发事件，传递旧的 stamina 值
-                    Debug.Log("m_stamina set" + previousStamina); //active per frame
-                }
+                //if (Mathf.Abs(m_stamina - value) > Mathf.Epsilon)
+                //{
+                //    float previousStamina = m_stamina;
+                //    m_stamina = value;
+                //    m_staminaChanged.Invoke(previousStamina); // 触发事件，传递旧的 stamina 值
+                //    //Debug.Log("m_stamina set" + previousStamina); //active per frame
+                //}
+
+                float previousStamina = m_stamina;
+                m_stamina = value;
+                m_staminaChanged.Invoke(previousStamina); // 触发事件，传递旧的 stamina 值
             }
         }
 
@@ -64,12 +68,14 @@ namespace Gyvr.Mythril2D
 
         public void Set(float stamina)
         {
-            if (Mathf.Abs(m_stamina - 0f) > Mathf.Epsilon)
-            {
-                float previousStamina = m_stamina;
-                m_stamina = 0f;
-                m_staminaChanged.Invoke(previousStamina); 
-            }
+            // Mathf.Epsilon 是浮点 0 因为初始值为 0 所以跳过了执行
+            //if (Mathf.Abs(m_stamina - 0f) > Mathf.Epsilon)
+
+            float previousStamina = m_stamina;
+            //m_stamina = 0f; 一直设为 0 没有用方法传入的新值
+            m_stamina = stamina;
+            m_staminaChanged.Invoke(previousStamina); 
+
         }
 
         public void Set(Stats stats)

@@ -11,6 +11,7 @@ namespace Gyvr.Mythril2D
         public int usedPoints;
         public int experience;
         public Stats missingCurrentStats;
+        public float missingCurrentStamina;
         public Stats customStats;
         public DatabaseEntryReference<Equipment>[] equipments;
         public DatabaseEntryReference<AbilitySheet>[] bonusAbilities;
@@ -81,6 +82,7 @@ namespace Gyvr.Mythril2D
                 experience = m_playerInstance.experience,
                 equipments = m_playerInstance.equipments.Values.Select(equipment => GameManager.Database.CreateReference(equipment)).ToArray(),
                 missingCurrentStats = m_playerInstance.stats - m_playerInstance.currentStats,
+                missingCurrentStamina = m_playerInstance.maxStamina - m_playerInstance.currentStamina,
                 customStats = m_playerInstance.customStats,
                 equippedAbilities = m_playerInstance.equippedAbilities.Where(ability => ability != null).Select(ability => GameManager.Database.CreateReference(ability)).ToArray(),
                 bonusAbilities = m_playerInstance.bonusAbilities.Select(ability => GameManager.Database.CreateReference(ability)).ToArray(),

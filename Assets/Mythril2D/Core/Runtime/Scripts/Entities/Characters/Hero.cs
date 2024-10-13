@@ -53,12 +53,14 @@ namespace Gyvr.Mythril2D
         public UnityEvent<AbilitySheet[]> equippedAbilitiesChanged => m_equippedAbilitiesChanged;
         public Stats customStats => m_customStats;
         public Stats missingCurrentStats => m_missingCurrentStats;
+        public float missingCurrentStamina => m_missingCurrentStamina;
         public int usedPoints => m_usedPoints;
 
         public const int MaxEquipedAbilityCount = 4;
 
         private Stats m_customStats = new Stats();
         private Stats m_missingCurrentStats = new Stats();
+        private float m_missingCurrentStamina = 0;
         private int m_usedPoints = 0;
         private int m_experience = 0;
         private SerializableDictionary<EEquipmentType, Equipment> m_equipments = new SerializableDictionary<EEquipmentType, Equipment>();
@@ -116,8 +118,11 @@ namespace Gyvr.Mythril2D
         //}
         private new void Awake()
         {
+            m_maxStats.staminaChanged.AddListener(OnStaminaChanged);
+
             base.Awake();
             //m_currentStats.changed.AddListener(HandleStamina);
+            
         }
 
         private void Start()
@@ -129,6 +134,23 @@ namespace Gyvr.Mythril2D
         {
             //Debug.Log("consumStamina = " + m_currentStats.Stamina);
             if (useStamina) HandleStamina();
+        }
+
+        private void OnStaminaChanged(float previous)
+        {
+            //Debug.Log("m_maxStats.stamina" + m_maxStats.stamina);
+            //Debug.Log("m_currentStats.stamina" + m_currentStats.stamina);
+            //Debug.Log("maxStamina" + maxStamina);
+            //Debug.Log("previous" + previous);
+
+            float difference = m_maxStats.stamina - previous;
+            float newCurrentStamina = m_currentStats.stamina + difference;
+            // Make sure we don't kill the character when updating its maximum stats
+            newCurrentStamina = math.max(newCurrentStamina, 1);
+            m_currentStats.Set(newCurrentStamina);
+
+            //Debug.Log("newCurrentStamina" + newCurrentStamina);
+            //Debug.Log("m_currentStats.stamina" + m_currentStats.stamina);
         }
 
         public float GetMaxStamina()
@@ -155,7 +177,6 @@ namespace Gyvr.Mythril2D
             m_currentStats.Stamina -= math.min(value, m_currentStats.Stamina);
             GameManager.NotificationSystem.manaConsumed.Invoke(this, value);
 
-            Debug.Log("m_currentStats[EStat.Stamina] = " + m_currentStats[EStat.Stamina]);
         }
 
         private void HandleStamina()
@@ -372,14 +393,17 @@ namespace Gyvr.Mythril2D
             Stats totalStats = m_sheet.baseStats + m_customStats + equipmentStats;
 
             m_maxStats.Set(totalStats);
+            m_maxStats.Set(maxStamina);
 
             ApplyMissingCurrentStats();
         }
 
         private void ApplyMissingCurrentStats()
         {
+            m_currentStats.Set(m_currentStats.stamina - m_missingCurrentStamina);
             m_currentStats.Set(m_currentStats.stats - m_missingCurrentStats);
             m_missingCurrentStats.Reset();
+            m_missingCurrentStamina = 0f;
         }
 
         private void OnLevelUp(bool silentMode = false)
@@ -436,6 +460,7 @@ namespace Gyvr.Mythril2D
 
             // Copy missing current stats so block data doesn't get altered
             m_missingCurrentStats = new Stats(block.missingCurrentStats);
+            m_missingCurrentStamina = block.missingCurrentStamina;
 
             // Clear equipped abilities
             for (int i = 0; i < m_equippedAbilities.Length; ++i)

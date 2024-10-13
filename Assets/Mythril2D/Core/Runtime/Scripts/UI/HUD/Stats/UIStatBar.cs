@@ -39,6 +39,8 @@ namespace Gyvr.Mythril2D
             // 不对啊 这获取的不是 player 吗那么应该只对应玩家吧
             m_target.maxStatsChanged.AddListener(OnStatsChanged);
             m_target.currentStatsChanged.AddListener(OnStatsChanged);
+
+            // 基本属性写在了 Base 基类 精力属性只写在了 Hero 子类
             m_target.maxStaminaChanged.AddListener(OnStaminaChanged);
             m_target.currentStaminaChanged.AddListener(OnStaminaChanged);
 

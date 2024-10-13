@@ -10,7 +10,7 @@ namespace Gyvr.Mythril2D
 
         public bool TryExecute(CharacterBase source, IInteractionTarget target)
         {
-            return monster.Loot();
+            return monster.OnLooting();
         }
     }
 }

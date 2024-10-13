@@ -72,10 +72,10 @@ namespace Gyvr.Mythril2D
 
                 // cancel the playing animation
                 this.transform.Find("Pivot").gameObject.SetActive(false);
+
                 //GameObject lootbox = this.transform.Find("Lootbox").gameObject;
                 //lootbox.SetActive(true);
                 //CheckOverlappedObject();
-
 
                 //CapsuleCollider2D m_capsuleCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
                 //m_capsuleCollider.isTrigger = true;
@@ -84,9 +84,9 @@ namespace Gyvr.Mythril2D
             }
         }
 
-        public bool Loot()
+        private bool LootFinished()
         {
-            if (!m_looted)
+            if (m_looted == false)
             {
                 foreach (Loot loot in m_sheet.potentialLoot)
                 {
@@ -112,6 +112,13 @@ namespace Gyvr.Mythril2D
             return false;
         }
 
+        public bool OnLooting()
+        {
+
+
+            return false;
+        }
+
         //void OnTriggerStay(Collider collisionInfo)
         void OnTriggerEnter2D(Collider2D other)
         {
@@ -119,7 +126,7 @@ namespace Gyvr.Mythril2D
             {
                 Debug.Log("Monster Interaction");
                 Debug.Log("GameManager.Config.collisionContactFilter = " + GameManager.Config.collisionContactFilter);
-                GameManager.Player.GetComponent<PlayerController>().m_interactionTarget = this.gameObject;
+                //GameManager.Player.GetComponent<PlayerController>().m_interactionTarget = this.gameObject;
                 //GameManager.PlayerSystem.PlayerInstance.GetComponent<PlayerController>().GetInteractibleObject();
             }
         }
@@ -129,7 +136,7 @@ namespace Gyvr.Mythril2D
         {
             if (String.Equals(other.gameObject.tag, "Player") == true)
             {
-                GameManager.Player.GetComponent<PlayerController>().m_interactionTarget = null;
+                //GameManager.Player.GetComponent<PlayerController>().m_interactionTarget = null;
             }
         }
 

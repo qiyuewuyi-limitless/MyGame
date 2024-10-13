@@ -23,13 +23,14 @@ namespace Gyvr.Mythril2D
 
         public GameObject interactionTarget => m_interactionTarget;
 
+        private GameObject m_interactionTarget = null;
+        //public GameObject m_interactionTarget = null;
+
         private CharacterBase m_character = null;
 
         private Vector2 m_movementDirection;
         private Transform m_interactionPivot = null;
 
-        public GameObject m_interactionTarget = null;
-        //private GameObject m_interactionTarget = null;
 
         private void Awake()
         {
